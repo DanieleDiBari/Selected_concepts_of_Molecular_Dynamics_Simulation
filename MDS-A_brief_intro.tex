@@ -1,0 +1,347 @@
+\documentclass[notes]{beamer}       		% compila sia i frame che le note
+%\documentclass{beamer}              				% compila solo i frame
+%\documentclass[notes=only]{beamer}  	% compila solo le note
+
+% ita language and encoding
+\usepackage[utf8]{inputenc}
+%\usepackage[italian]{babel}
+
+% formattazione
+\usepackage{ragged2e} 							% pacchetto che contiene il comando \justifying
+%\apptocmd{\frame}{}{\justifying}{}  	% --> applica la giustificazione a tutti i frame del documento
+%\justifying											% --> applica la giustificazione a tutto il documento
+
+% graphics style
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{shadowtext}
+
+%tabelle
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{booktabs} % aggiunge: \toprule , \midrule e \bottomrule ; stile tabella
+
+%image paths
+\graphicspath{	
+	{./Images/}
+}
+
+% impostazioni base delle slide - tema, colori, caratteri, ... (deic.uab.es/~iblanes/beamer_gallery/)
+\mode<presentation>
+{
+	%\usetheme{CambridgeUS}      	% or try Darmstadt, Madrid, Warsaw, ...
+  	\usecolortheme{orchid} 				% for the color box (or try rose ...)
+	\usefonttheme{structurebold} 	% or try structureitalicserif, structuresmallcapsserif
+}
+
+
+
+%% ---------------------------------------------------------------------------------------------------------
+% %	CREAZIONE TEMA 
+
+%%    Impostazione dei colori - COLORTHEME 
+% (modifica di "beamercolorthemebeaver.sty" in "MiKTeX 2.9/tex/latex/beamer/themes/color" )
+\definecolor{darkblue}{RGB}{52,57,176}
+
+\setbeamercolor{section in toc}{fg=black,bg=white}
+\setbeamercolor{alerted text}{fg=darkblue!80!gray}
+\setbeamercolor*{palette primary}{fg=darkblue!60!black,bg=gray!30!white}
+\setbeamercolor*{palette secondary}{fg=darkblue!70!black,bg=gray!15!white}
+\setbeamercolor*{palette tertiary}{bg=darkblue!80!black,fg=gray!10!white}
+\setbeamercolor*{palette quaternary}{fg=darkblue,bg=gray!5!white}
+
+\setbeamercolor*{sidebar}{fg=darkblue,bg=gray!15!white}
+
+\setbeamercolor*{palette sidebar primary}{fg=darkblue!10!black}
+\setbeamercolor*{palette sidebar secondary}{fg=white}
+\setbeamercolor*{palette sidebar tertiary}{fg=darkblue!50!black}
+\setbeamercolor*{palette sidebar quaternary}{fg=gray!10!white}
+
+%\setbeamercolor*{titlelike}{parent=palette primary}
+\setbeamercolor{titlelike}{parent=palette primary,fg=darkblue}
+\setbeamercolor{frametitle}{bg=gray!10!white}
+\setbeamercolor{frametitle right}{bg=gray!60!white}
+
+\setbeamercolor*{separation line}{}
+\setbeamercolor*{fine separation line}{}
+
+
+%%     Impostazione dei blocchi - INNERTHEME 
+% (modifica di "beamerinnerthemerounded.sty" in "MiKTeX 2.9/tex/latex/beamer/themes/inner" )
+%\setbeamertemplate{blocks}[rounded]
+\setbeamertemplate{items}[ball]
+%\setbeamertemplate{sections/subsections in toc}[ball]
+%\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true]
+%\setbeamertemplate{part page}[default][colsep=-4bp,rounded=true]
+
+
+%	%    Impostazione delle intestazioni - OUTERTHEME
+% (modifica di "beamerouterthemeinfolines.sty" in "MiKTeX 2.9/tex/latex/beamer/themes/outer" )
+\setbeamercolor{institute in head/foot}{parent=palette secondary}
+\setbeamercolor{subject in head/foot}{parent=palette tertiary}
+\setbeamercolor{title in head/foot}{parent=palette primary}
+\setbeamertemplate{footline}
+{ 
+	\leavevmode%
+	\hbox{%
+  		% "ht" è lo spazio sopra il carattere partendo dalla base del carattere, "dp"  è lo spazio sotto il carattere partendo sempre dalla base del carattere
+  		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,left,leftskip=4ex]{author in head/foot}%
+   			\usebeamerfont{author in head/foot}\insertshortauthor
+  		\end{beamercolorbox}%
+  		\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,center]{institute in head/foot}%
+    		\usebeamerfont{title in head/foot}\insertshortinstitute
+ 		 \end{beamercolorbox}%
+ 		 \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,right,rightskip=4ex]{date in head/foot}%
+ 		 	\usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}\insertframenumber{} / \inserttotalframenumber
+ 		 \end{beamercolorbox}
+ 		 }%
+ 	\vskip0pt%
+}
+\makeatletter
+\setbeamertemplate{headline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.8ex,dp=1.35ex,left]{subject in head/foot}	
+    \usebeamerfont{section in head/foot}\hspace*{4ex}Complements of Condensed Matter Physics			% --> N.B. Qui c'è l'unica scritta che non usa nessun template tipo \title o \institute
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.8ex,dp=1.35ex,right]{title in head/foot}%
+    \usebeamerfont{subsection in head/foot}\insertshorttitle\hspace*{4ex}
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+\makeatother
+
+%%    FINE IMPOSTAZIONI TEMA
+%% ---------------------------------------------------------------------------------------------------------
+
+
+
+% settagio dati principali del file - titolo, autore, ...
+\title[Selected concepts of Molecular Dynamics Simulation]{Molecular Dynamics Simulation}
+\subtitle{A brief introduction}
+\author{Daniele Di Bari}
+\institute{University of Perugia}
+\date{5th March 2018}
+\subject{Complements of Condensed Matter Physics}
+
+% By default the beamer class adds navigation buttons in the bottom right corner. To remove them one can place
+\beamertemplatenavigationsymbolsempty
+
+% settaggio prima slide
+\setbeamertemplate{title page}
+{
+	\shadowcolor{white!30!black}
+	\vspace{-0.5cm}	
+	
+    \shadowtext{\textcolor{white}{\textbf{\footnotesize{Selected concepts of}}}}
+   
+    \vspace{0.2cm}  	
+    
+   	\shadowtext{\textcolor{white}{\textbf{\LARGE \inserttitle}}}\par
+      
+   	\vspace{0.1cm}  
+
+   	\shadowtext{\textcolor{white}{\emph{\large \insertsubtitle}}}\par
+   	
+   	\vspace{2.5cm}
+	
+	\titlepagetext{lightgray}{The general particle physics}\\
+	\titlepagetext{lightgray}{experiment in space, on board}\\
+	\titlepagetext{lightgray}{the International Space Station}\\
+	\titlepagetext{lightgray}{since 19th May 2011.}		
+}
+				
+% colors
+\definecolor{itemred}{RGB}{163,0,0}
+\definecolor{itemblue}{RGB}{52,57,176}
+\definecolor{notegrey}{RGB}{90,90,90}
+\definecolor{titlebgd_grey}{RGB}{242,242,242}
+\definecolor{titleframe_red}{RGB}{204,0,0}
+
+% COMANDI
+% Formato testo generico in titolpage
+\newcommand\titlepagetext[2]{\textcolor{#1}{\footnotesize{\textit{{#2}}}}}
+\newcommand\colortextbf[2]{\textcolor{#1}{\textbf{#2}}}
+\newcommand\bluetextbf[1]{\textcolor{itemblue}{\textbf{#1}}}
+\newcommand\bluetextit[1]{\textcolor{itemblue}{\textit{#1}}}
+\newcommand\textitem[2]{\textcolor{itemblue}{\textbf{#1} (\textit{#2})}}
+
+% Testo giustificato
+\newenvironment<>{justify}{\justifying{}}
+
+\begin{document}
+	% impostare una foto come sfondo del frame: 
+	%\usebackgroundtemplate{\includegraphics[height=\paperheight,keepaspectratio]{on_ISS-08_cutMIDDLEUP-3088.jpg}}	
+	% 	possibili impostazioni per l'img: width=\paperwidth  --  height=\paperheight  --  keepaspectratio
+
+\begin{frame}\pdfbookmark[2]{Title}{Title}
+	\titlepage
+\end{frame}
+
+\note{ 
+\footnotesize{
+There are a range of techniques of a quasi-experimental character, referred to collectively as computer simulation, the importance of which in the development of liquid state theory can hardly be overstated.
+The usefulness of computer simulation relies on the fact that a sample containing a few hundred or few thousand particles is in many cases sufficiently large to simulate the behaviour of a macroscopic system. 
+There are two classic approaches: molecular dynamics and Monte Carlo. 
+Molecular dynamics has the advantage of allowing the study of time-dependent processes, but for the calculation of static properties a Monte Carlo method may be more efficient. 
+We will focus on the first.
+}
+}
+
+\usebackgroundtemplate{}
+
+%\begin{frame}[allowframebreaks]\pdfbookmark[2]{Contents}{Contents}
+%\frametitle{Table of Contents}
+%\tableofcontents
+%\end{frame}
+
+\begin{frame}<presentation:0>[noframenumbering]
+frame rimosso dalla presentazione
+\end{frame}
+
+\section{Introduction}
+\begin{frame}
+	\setbeamertemplate{background}{white}
+	\frametitle{Introduction}
+	\framesubtitle{The Alpha Magnetic Spectrometer}
+	\justifying
+	AMS-02 is a general purpose \textbf{high energy particle detector}  designed to operate as an external module on the
+	International Space Station.
+	
+	\vspace{0.25cm}
+	\begin{block}{Purpose of the AMS experiment}
+		\justifying
+		To perform accurate, high statistics, long duration measurements of the spectra of energetic primary charged 
+		cosmic rays (CRs) in space. 
+	\end{block}
+		
+	\vspace{0.25cm}
+	Some of the \textbf{physics goals} are:
+	\begin{enumerate}
+		\item \bluetextbf{Dark Matter}
+		\item \bluetextbf{Matter/Antimatter Asymmetry}
+		\item \bluetextbf{Cosmic Ray Physics}
+	\end{enumerate}
+\end{frame}
+\note{
+	AMS-02 (Alpha Magnetic Spectrometer ) is a general purpose high energy particle detector which was successfully deployed on 
+	the International Space Station (ISS) on May 19, 2011 to conduct a unique long duration mission of fundamental physics 
+	research in space. Among the physics objectives of AMS are the searches for an understanding of Dark Matter, Anti-matter, the 
+	origin of cosmic rays and the exploration of new physics phenomena not possible to study with ground based experiments
+	Lo scopo dell'esperimento è quello di effettuare, per un periodo di lunga durata così da ottenere un'elevata statistica, delle 
+	misure molto accurate dello spettro di energia (per energie fino all'ordine dei TeV) dei raggi cosmici carichi primari direttamente 
+	nello spazio.
+}
+
+\section{Technical Requirements}
+\subsection{from Physics Goals}
+\begin{frame}
+    \frametitle{Technical Requirements}
+    \framesubtitle{from Physics Goals}
+    \justifying
+    
+	Physical goals involve \textbf{technical requirements for the AMS detector}:
+	
+	\begin{itemize}\justifying
+		\item	\bluetextbf{Dark Matter $\Rightarrow$}
+					to get $e^+/p$ rejection of $\sim10^{-6}$ for the measurement of the positron fraction.
+		\item	\bluetextbf{Matter/Antimatter Asymmetry $\Rightarrow$}
+					to reach a sensitivity in the search for anti-matter nuclei of $10^{-10}$ (ratio of anti-helium nuclei to helium nuclei).
+		\item	\bluetextbf{Cosmic Ray Physics $\Rightarrow$}
+					to measure the composition and spectra of charged particles with an accuracy of 1\%.
+	\end{itemize}
+	
+	Moreover, \bluetextbf{for each of these ones}, it is very important to extend, as far as possible, the energy range of the 
+	measurements.
+	
+	For AMS, the required energy range is from 0.5 to $\sim$ 2000 $GeV$.
+
+	%\footnotesize{\underline{\textbf{Note}} These requirements represent a considerable sensitivity improvement compared to the previous space-borne experiments.}
+
+\end{frame}
+
+\note{
+	Esiste un forte interesse nell'effettuare delle misure di precisione della frazione di positroni dei raggi cosmici nella regione 
+	energetica da 10 a 1000 GeV, in quanto le misurazioni di $e^+ / (e^+ + e^-)$, da AMS-01, HEAT, PAMELA e FERMI indicano 
+	una grande deviazione di questo rapporto dalla produzione di e+ e e- previsto da un modello che comprende solo collisioni 
+	ordinarie del raggio cosmico.
+   	 
+   	These available measurements are both at too low an energy and of too limited statistics to shed the light on the origin of this 
+   	significant excess.
+   	 
+	AMS-02 is expected to provide definitive answers concerning the nature of this deviation.
+}
+
+\begin{frame}
+	\frametitle{Technical Requirements}
+    \framesubtitle{from Physics Goals}	
+    
+    \begin{block}{The technical challenge of AMS-02}
+		\justifying
+		The illustrated requirements represent a considerable sensitivity improvement compared to the previous space-borne 
+		experiments.
+	\end{block}
+   	
+   	\vspace{0.25cm}
+	\small{\bluetextbf{NOTE}}
+	\vspace{-0.2cm}
+    \begin{itemize}
+    	\item[\footnotesize{$\blacktriangleright$}] 
+    		\footnotesize{\justifying
+    		There is a strong demand for precision measurements of CRs in the energy region from 10 to 1000 
+    		$GeV$ as the measurements of positron fraction, i.e.  $e^+ / (e^+ + e^-)$, by AMS-01, HEAT, PAMELA and FERMI 
+    		indicate a large deviation of this ratio from the production of $e^+$ and $e^-$ predicted by a model that includes only 
+    		ordinary CR collisions.
+    		
+    		These available measurements are both at too low an energy and of too limited statistics to shed the light on the origin of 
+    		this significant excess.
+    		
+    		AMS-02 is expected to provide definitive answers concerning the nature of this deviation.}
+   	\end{itemize}  
+   	 
+%
+%%	\vspace{0.25cm}
+%	There is a strong demand for precision measurements of cosmic rays in the energy region from 10 to 1000 GeV as the 
+%	measurements of e+/(e+ + e-) by AMS-01, HEAT, PAMELA and FERMI indicate a large deviation of this ratio from the 
+%	production of e+ and e- predicted by a model that includes only ordinary cosmic ray collisions. 
+%	
+%	These available measurements are both at too low an energy and of too limited statistics to shed the light on the origin of this 
+%	significant excess. 
+%	
+%	AMS-02 is	expected to provide definitive answers concerning the nature of this deviation.
+\end{frame}
+
+%\begin{frame}
+%	\frametitle{Technical Requirements}
+%    \framesubtitle{From Physics Goals}
+%	\begin{columns}
+%		\begin{column}{0.5\textwidth}
+%			\begin{center}
+%				\includegraphics[width=0.95\columnwidth]{Schem_Requirements-DM.png}
+%			\end{center}
+%		\end{column}
+%
+%		\begin{column}{0.5\textwidth}
+%			\begin{center}
+%				\includegraphics[width=0.95\columnwidth]{Schem_Requirements-Antimatter.png}
+%			\end{center}
+%		\end{column}
+%	\end{columns}
+%\end{frame}
+
+\begin{frame}[label=AMS-apparatus_img]
+	\frametitle{Technical Requirement}
+	\framesubtitle{general structure of the AMS apparatus}
+	\begin{center}
+		\vspace{-0.15cm}
+		%\hspace{-0.35cm}\includegraphics[height=0.7\paperheight]{Schem_structure_of_AMS.png}
+
+		\vspace{-0.35cm}
+
+		\hspace{0.25cm}\hyperlink{AMS-apparatus_list}{\textbf{\beamerbutton{link to AMS apparatus list}}}
+	\end{center}
+	%\vspace{-0.25cm}
+\end{frame}
+
+\end{document}
