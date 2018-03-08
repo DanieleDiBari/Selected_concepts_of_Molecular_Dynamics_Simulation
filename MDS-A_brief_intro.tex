@@ -119,7 +119,7 @@
 
 % settagio dati principali del file - titolo, autore, ...
 \title[Selected concepts of Molecular Dynamics Simulation]{Molecular Dynamics Simulation}
-\subtitle{A brief introduction}
+\subtitle{A brief introduction of selected concepts}
 \author{Daniele Di Bari}
 \institute{University of Perugia}
 \date{5th March 2018}
@@ -132,24 +132,30 @@
 \setbeamertemplate{title page}
 {
 	\shadowcolor{white!30!black}
-	\vspace{-0.5cm}	
-	
-    \shadowtext{\textcolor{white}{\textbf{\footnotesize{Selected concepts of}}}}
-   
-    \vspace{0.2cm}  	
+	\vspace{1.5cm}	   
     
-   	\shadowtext{\textcolor{white}{\textbf{\LARGE \inserttitle}}}\par
-      
-   	\vspace{0.1cm}  
-
-   	\shadowtext{\textcolor{white}{\emph{\large \insertsubtitle}}}\par
+    	
+    \begin{colorbox}{darkblue}{ \parbox{0.8\paperwidth}{
+    	\shadowtext{\textcolor{white}{\textbf{\footnotesize{ }}}}
+    	
+    	\vspace{0.2cm}  	
+    	
+    	\shadowtext{\textcolor{white}{\textbf{\LARGE \inserttitle}}}\par
+    	
+    	\vspace{0.1cm}  
+    	
+    	\shadowtext{\textcolor{white}{\emph{\large \insertsubtitle}}}\par
+    	
+    	\vspace{0.2cm}  
+    	}}
+    \end{colorbox} 
    	
    	\vspace{2.5cm}
 	
 	\titlepagetext{lightgray}{The general particle physics}\\
 	\titlepagetext{lightgray}{experiment in space, on board}\\
-	\titlepagetext{lightgray}{the International Space Station}\\
-	\titlepagetext{lightgray}{since 19th May 2011.}		
+	\titlepagetext{gray}{the International Space Station}\\
+	\titlepagetext{gray}{since 19th May 2011.}		
 }
 				
 % colors
@@ -172,7 +178,7 @@
 
 \begin{document}
 	% impostare una foto come sfondo del frame: 
-	%\usebackgroundtemplate{\includegraphics[height=\paperheight,keepaspectratio]{on_ISS-08_cutMIDDLEUP-3088.jpg}}	
+	%  \usebackgroundtemplate{\includegraphics[height=\paperheight,keepaspectratio]{on_ISS-08_cutMIDDLEUP-3088.jpg}}	
 	% 	possibili impostazioni per l'img: width=\paperwidth  --  height=\paperheight  --  keepaspectratio
 
 \begin{frame}\pdfbookmark[2]{Title}{Title}
@@ -204,34 +210,23 @@ frame rimosso dalla presentazione
 \begin{frame}
 	\setbeamertemplate{background}{white}
 	\frametitle{Introduction}
-	\framesubtitle{The Alpha Magnetic Spectrometer}
+	\framesubtitle{What is a MD Simulation?}
 	\justifying
-	AMS-02 is a general purpose \textbf{high energy particle detector}  designed to operate as an external module on the
-	International Space Station.
-	
-	\vspace{0.25cm}
-	\begin{block}{Purpose of the AMS experiment}
-		\justifying
-		To perform accurate, high statistics, long duration measurements of the spectra of energetic primary charged 
-		cosmic rays (CRs) in space. 
-	\end{block}
-		
-	\vspace{0.25cm}
-	Some of the \textbf{physics goals} are:
-	\begin{enumerate}
-		\item \bluetextbf{Dark Matter}
-		\item \bluetextbf{Matter/Antimatter Asymmetry}
-		\item \bluetextbf{Cosmic Ray Physics}
-	\end{enumerate}
+	Molecular Dynamics simulation is a technique for computing the equilibrium and transport properties of a classical many-body system. 
+	In this context, the word classical means that the nuclear motion of the constituent particles obeys the laws of classical mechanics. 
+	This is an excellent approximation for a wide range of materials.
+	Only when we consider the translational or rotational motion of light atoms or molecules (He, $\text{H}_2$, $\text{D}_2$) 
+	or vibrational motion with a frequency $\nu$ such that $h \nu < k_B T$ should we worry about quantum effects.
 \end{frame}
 \note{
-	AMS-02 (Alpha Magnetic Spectrometer ) is a general purpose high energy particle detector which was successfully deployed on 
-	the International Space Station (ISS) on May 19, 2011 to conduct a unique long duration mission of fundamental physics 
-	research in space. Among the physics objectives of AMS are the searches for an understanding of Dark Matter, Anti-matter, the 
-	origin of cosmic rays and the exploration of new physics phenomena not possible to study with ground based experiments
-	Lo scopo dell'esperimento è quello di effettuare, per un periodo di lunga durata così da ottenere un'elevata statistica, delle 
-	misure molto accurate dello spettro di energia (per energie fino all'ordine dei TeV) dei raggi cosmici carichi primari direttamente 
-	nello spazio.
+\footnotesize{
+We will assume that the motion of the nuclei can be described by Newton's law. This approximation breaks down clearly for very light atoms (H, De, He) and for all vibrational motions whose characteristic frequency, translated in energy, is comparable or larger than the thermal energy $k_{B} T$.
+Performing numerical simulations, we sample the system phase-space and hence we have access to positions rN and momenta pN of all atoms in the system. From this information the microscopic value of all observables which are function of (rN,pN) can be evaluated and, eventually, averaged over time or phase-space.
+Numerical simulations can be considered as a tool for performing numerical experiments. In this respect, simulations can be used for different applications: 
+reproduce an existing experimental result, to complement the macroscopic information with the atomistic level provided by the simulation;
+to produce a numerical prediction of a gedanken experiment;
+for checking theoretical approximations based on model systems.
+}
 }
 
 \section{Technical Requirements}
@@ -262,15 +257,7 @@ frame rimosso dalla presentazione
 \end{frame}
 
 \note{
-	Esiste un forte interesse nell'effettuare delle misure di precisione della frazione di positroni dei raggi cosmici nella regione 
-	energetica da 10 a 1000 GeV, in quanto le misurazioni di $e^+ / (e^+ + e^-)$, da AMS-01, HEAT, PAMELA e FERMI indicano 
-	una grande deviazione di questo rapporto dalla produzione di e+ e e- previsto da un modello che comprende solo collisioni 
-	ordinarie del raggio cosmico.
-   	 
-   	These available measurements are both at too low an energy and of too limited statistics to shed the light on the origin of this 
-   	significant excess.
-   	 
-	AMS-02 is expected to provide definitive answers concerning the nature of this deviation.
+	In a conventional molecular dynamics simulation of a bulk fluid a system of N particles is allocated a set of initial coordinates within a cell of fixed volume, most commonly a cube. A set of velocities is also assigned, usually drawn from a Maxwell distribution appropriate to the temperature of interest and selected in such a way that the net linear momentum of the system is zero. The subsequent calculation tracks the motion of the particles through space by integration of the classical equations of motion. Equilibrium properties are obtained as time averages over the dynamical history of the system in the manner outlined in Section 2.2 and correspond to averages over a microcanonical ensemble. In modern work N is typically of order 103 or 104, though much larger systems have occasionally been studied. To minimise surface effects, and thereby simulate more closely the behaviour expected of a macroscopic system, it is customary to use a periodic boundary condition.
 }
 
 \begin{frame}
