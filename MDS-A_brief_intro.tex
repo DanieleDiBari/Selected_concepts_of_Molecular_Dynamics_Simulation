@@ -210,25 +210,113 @@ frame rimosso dalla presentazione
 \begin{frame}
 	\setbeamertemplate{background}{white}
 	\frametitle{Introduction}
-	\framesubtitle{Why do we should use Computer Simulation?}
+	\framesubtitle{The problem of describing complex system}
 	\justifying
-	Computer simulations allow us to calculate the essentially exact results for a given model system without having to rely on approximate theories. 
-
-	We can use the results of a simulation to compare them with:
 	
-	\begin{itemize}\justifying
-		\item[$\blacktriangleright$] the results of an experiment - TESTS OF MODELS;
-		\item[$\blacktriangleright$] the predictions of an approximate analytical theory applied to the same model - TESTS OF THEORY.
-	\end{itemize}	
+	Few systems in statistical mechanics are exactly soluble, the majority require approximations, but when their complexity increases 
+	it becomes difficult even to construct an approximate theory in a reasonable way. 
 	
-	If we found some disagrees in the two cases seams respectively that:
+	\vspace*{0.4cm}
 	
-	\begin{itemize}\justifying
-		\item[$\blacktriangleright$] our model is inadequate - we have to improve on our estimate of the intermolecular interactions;
-		\item[$\blacktriangleright$] the theory is flawed. The computer simulation plays the role of the experiment designed to test the theory. This method of screening theories before we apply them to the real world is called a computer experiment.
-	\end{itemize}	
-	 or that (
+	\textbf{The more complex and realistic is a system, the more difficult and interesting it becomes to describe it.} 
+	
+	\vspace*{0.4cm}
+	
+	In this case, an increase in the complexity raises the necessity of having exact results available, both to test existing 
+	approximation methods and to point the way towards new approaches. 	
+	
 \end{frame}
+
+
+\begin{frame}
+	\frametitle{Introduction}
+	\framesubtitle{Why to use Computer Simulation?}
+	\justifying
+	Computer simulations allow to calculate the essentially exact results for a given model without having to rely on approximate theories. 
+	
+	\begin{itemize}\justifying
+		\item[$\blacktriangleright$] \textbf{TEST THE MODELS:} comparing the results of the simulation with those of a real experiment. 
+		If there is disagreement, the model is inadequate - it is necessary to improve on the estimate of the intermolecular interactions.
+		\item[$\blacktriangleright$] \textbf{TEST THE THEORIES:} comparing the results of the simulation with the predictions of an 
+		approximate analytical theory applied to the same mode. If there is disagreement, the theory is flawed.\footnotemark[1] 
+	\end{itemize}	
+	
+	\footnotetext[1]{The computer simulation plays the role of the experiment designed to test the theory. 
+	This method of screening theories before we apply them to the real world is called a computer experiment.}
+\end{frame}
+
+\note{
+
+}
+
+
+\begin{frame}
+	\frametitle{Introduction}
+	\framesubtitle{the principal steps of a molecular simulation}
+	\justifying
+	
+	The most common application of computer simulations is to predict the properties of materials (also of materials that have not yet been made) because they are like a ``virtual laboratory'' and they have the advantage that many such ``experiments'' can be easily set up and carried out in succession by simply varying the control parameters.
+
+Extreme conditions, such as high $T$ and $p$, can be created in a simple and considerably safer manner. 
+
+The obvious downside is that the results are only as good as the numerical model. In addition, the results can be artificially biased if the molecular dynamics calculation is unable to sample an adequate number of microstates over the time it is allowed to run.
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Introduction}
+	\framesubtitle{the principal steps of a molecular simulation}
+	\justifying
+
+Computer simulation provides a direct route from the microscopic details of a system (...) to macroscopic properties of experimental interest (...). As well as being of academic interest, this type of information is technologically useful. It may be difficult or impossible, while a computer simulation of the material in, say, a shock wave, a high-temperature plasma, nuclear reactor, or a planetary core, would be perfectly feasible. 
+
+Quite subtle details of molecular motion and structure, for example in heterogeneous catalysis, fast ion conduction, or enzyme action, are difficult to probe experimentally, but can be extracted readily from a computer simulation.
+
+Finally, while the speed of molecular events is itself an experimental difficulty, it presents no hindrance to the simulator. A wide range of physical phenomena, from molecular to the galactic, may studied using some form of computer simulation.
+	
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Introduction}
+	\framesubtitle{the principal steps of a molecular simulation}
+	\justifying
+	
+	\vspace*{0.1cm}
+
+	A molecular-scale computer simulation consists of 3 principal steps:
+	
+	\begin{enumerate}\justifying
+		\item Construction of a model
+		\item Calculation of molecular trajectories
+		\item Analysis of those trajectories to obtain property values
+	\end{enumerate}
+	
+	\vspace*{0.2cm}
+
+	The second step constitutes the \textbf{main feature} of the simulation. In a way that molecular positions $\bold{r}^N$ are computed 
+	in this step, thus it is possible to discriminate among the different simulation methods.
+	
+	\vspace*{0.2cm}
+	
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{different_tipes_of_CS.PNG}
+	\end{center}
+	
+\end{frame}
+
+\note{
+In \textbf{molecular dynamics} the positions are obtained by numerically solving differential equations of motion and, hence, the positions are connected in time - the positions reveal dynamics of individual molecules as in a motion picture. 
+
+\vspace*{0.2cm}
+
+In other simulation methods the molecular positions are not temporally related. For instance, in \textbf{Monte Carlo} simulations the positions are generated stochastically such that a molecular configuration $\bold{r}^N$ depends only on the previous configuration. When the outcome of a random event in a sequence depends only on the outcome of the immediately previous event, the sequence is called a Markov chain.
+
+\vspace*{0.2cm}
+
+However in \textbf{other simulation methods}, the positions are computed from hybrid schemes that use some stochastic features, as in Monte Carlo, and some deterministic features, like in Molecular Dynamics.
+}
+
 
 \begin{frame}
 	\frametitle{Introduction}
