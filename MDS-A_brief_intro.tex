@@ -359,14 +359,15 @@ We will focus on the first.
 	\framesubtitle{A summary of Monte Carlo Simulations - II}
 	\justifying
 	
+	\vspace*{-0.2cm}
 	\textbf{Not all configurations that are generated are accepted.} 
 	The choice of rejecting or not a new configuration is made in such a way that, asymptotically, the configuration space is sampled 
 	according to the probability density corresponding to a particular ensemble.\footnotemark[1] 
 	
 	For example, in the canonical ensemble the average of a microscopic variable $A ( \bold{r}^N )$ is:
-	\begin{equation*}
+	\begin{equation}\label{eq:can_ens:avg_val}
 		\left< A \right> = \frac{1}{Z}	\int \cdots \int \, A ( \bold{r}^N ) \; e^{ -\beta \, U( \bold{r}^N)} \; d\bold{r}_1 \cdots d\bold{r}_N
-	\end{equation*}
+	\end{equation}
 	Due to $e^{ -\beta \, U( \bold{r}^N)}$, some configurations contribute largely to the integral while others do it less. 
 	Thus, \textbf{it is necessary to bias the sampling in favour of those configurations most likely to occur}.
 	
@@ -378,23 +379,78 @@ We will focus on the first.
 
 \begin{frame}[label=intro-MCS3]
 	\frametitle{Introduction}
-	\framesubtitle{A summary of Monte Carlo Simulations: Metropolis method}
+	\framesubtitle{A summary of the Monte Carlo simulations: Metropolis method}
+	\justifying	
+	
+	\vspace*{0.2cm}
+	
+	The Metropolis method used in Monte Carlo simulations involves the following main steps:
+	
+	\begin{columns}
+		\begin{column}{0.00\textwidth}\end{column}
+		
+		\begin{column}{0.68\textwidth}\justifying
+			\begin{enumerate}\justifying
+				\item	\textbf{Starting from a configuration} $m$. If this is the 1st step, initializing the positions and computing the 
+				potential energy.
+				\item \textbf{Generating a trial configuration} $n\,$ by selecting a particle $i\,$ at random and giving it a small, random
+						displacement, $\bold{r}^n_i \rightarrow \bold{r}^n_i + \Delta\bold{r}$, where $\Delta\bold{r}$ is chosen uniformly 
+						within prescribed limits.
+			\end{enumerate}
+		\end{column}
+		
+		\begin{column}{0.32\textwidth}
+			\centering	
+			\includegraphics[width=\textwidth]{Metropolis.PNG}
+		\end{column}	
+		
+		\begin{column}{0.00\textwidth}\end{column}
+	\end{columns}	
+	
+	\begin{columns}
+		\begin{column}{0.705\textwidth}\end{column}
+		
+		\begin{column}{0.35\textwidth}
+			\centering	
+			
+			\vspace*{-0.3cm}
+			\scriptsize{\bluetextbf{	Schematic view of
+											a random displacement
+											of the $i$-particle from $\bold{r}^m_i$ to $\bold{r}^n_i$}}					
+		\end{column}	
+		
+		\begin{column}{0.00\textwidth}\end{column}
+	\end{columns}	
+	
+\end{frame}
+
+\begin{frame}[label=intro-MCS4]
+	\frametitle{Introduction}
+	\framesubtitle{A summary of the Monte Carlo simulations: Metropolis method}
 	\justifying
 	
-	The Metropolis method involves the following principal steps:
-	
-	\begin{enumerate}
-		\item	Assign initial positions $\bold{r}_i$ to the $N$ molecules and compute the potential energy $U$.
-		\item Hypothesize a new configuration by arbitrarily choosing one molecule and proposing that it be moved from $\bold{r}$ through a randomly chosen distance and direction to a new position $\bold{r'}$.
-		\item Compute the total potential energy $U'$for this new configuration and accept the proposed move (allow it to occur) based on the following criteria:
-		\begin{equation}
-		\begin{cases}
-			\text{if } U' < U \Longrightarrow \text{accept with probability} = 1\\
-			\text{if } U' > U \Longrightarrow \text{accept with probability} \propto  e^{ -\beta \, (U' - U)} 
-		\end{cases}	
-		\end{equation}
-	
+	\begin{enumerate}\justifying
+		\item[3] \textbf{Verifying} whether \textbf{the trial configuration} must be rejected:
+					\begin{itemize}\justifying
+						\item \bluetextbf{yes:} count the old configuration $n$ as the new configuration $m$ and repeat the process from 
+								step 1
+						\item \bluetextbf{not:} compute the new potential energy $U_n$ and accept the proposed configuration with the 
+								following:
+								
+								\vspace*{-0.5cm}
+								\begin{equation*}
+									\hspace*{0.35cm}\begin{cases}
+									\text{if } U_n < U_m \Longrightarrow \text{accept with probability} = 1\\
+									\text{if } U_n > U_m \Longrightarrow \text{accept with probability} \propto  e^{ -\beta \, (U_n\, - U_m)} 
+									\end{cases}	
+								\end{equation*} 
+					\end{itemize}
+		\item[4] \textbf{Evaluating property integrands}, such as $A(\bold{r}^N)$ in \eqref{eq:can_ens:avg_val}, and accumulating them in running sums
+		\item[5] \textbf{Iterate the entire process} until at least a few million of configurations have been made to obtain an adequate 
+					statistical error in the average values
 	\end{enumerate}
+	
+
 \end{frame}
 
 \begin{frame}
