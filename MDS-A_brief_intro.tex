@@ -248,8 +248,8 @@ We will focus on the first.
 		approximate analytical theory applied to the same mode. If there is disagreement, the theory is flawed.\footnotemark[1] 
 	\end{itemize}	
 	
-	\footnotetext[1]{The computer simulation plays the role of the experiment designed to test the theory. 
-	This method of screening theories before we apply them to the real world is called a \textit{computer experiment}.}
+	\footnotetext[1]{\justifying The computer simulation plays the role of the experiment designed to test the theory. This method of 
+	screening theories before we apply them to the real world is called a \textit{computer experiment}.}
 \end{frame}
 
 \begin{frame}[label=intro-virtual_lab]
@@ -269,9 +269,8 @@ We will focus on the first.
 												%There is no difference between $10^{15} s$ or $10^{-9} s$
 	\end{enumerate}
 
-	Technologically useful informations, for systems that may be difficult or even impossible to investigate directly with a real experiment
-	(e.g. nuclear reactors or planetary cores),
-	can be obtained from those type of simulations. 
+	Technologically useful informations, for systems that may be difficult or even impossible to investigate directly with a real 
+	experiment (e.g. nuclear reactors or planetary cores), can be obtained from those type of simulations. 
 
 \end{frame}
 
@@ -330,16 +329,72 @@ We will focus on the first.
 	\textbf{Others simulation methods - } The positions are computed from hybrid schemes that use some stochastic features, as 
 	in Monte Carlo, and some deterministic features, like in Molecular Dynamics.
 	
-	\footnotetext[1]{When the outcome of a random event in a sequence depends only on the outcome of the immediately previous one, 
-	the sequence is called: \textit{Markov chain}.}
+	\footnotetext[1]{\justifying When the outcome of a random event in a sequence depends only on the outcome of the immediately 
+	previous one, the sequence is called: \textit{Markov chain}.}
 \end{frame}
 
-\begin{frame}[label=intro-diff_typesd]
+\begin{frame}[label=intro-MCS1]
 	\frametitle{Introduction}
-	\framesubtitle{A brief view of Monte Carlo Simulations}
+	\framesubtitle{A summary of Monte Carlo Simulations - I}
 	\justifying
 	
+	Monte Carlo Simulation is a purely stochastic method typically used to evaluate statistical-mechanical ensemble averages, i.e. 
+	multidimensional integrals performed of a $N$-body system. 
 	
+	\vspace*{0.3cm}
+	
+	Those integrals are evaluated by accumulating the integrand at random generated values of the independent variables that define 
+	a configuration of the system (usually the position $ \bold{r}^N$, possibly also the volume of the system or the number of particles 
+	that it contains). 
+	
+	\vspace*{0.3cm}
+	
+	\textbf{The particle momenta do not enter the calculation, there is no time scale involved, and the order in which the 
+	configurations occur has no special significance. The method is therefore limited to the calculation of static properties.}
+	
+\end{frame}
+
+\begin{frame}[label=intro-MCS2]
+	\frametitle{Introduction}
+	\framesubtitle{A summary of Monte Carlo Simulations - II}
+	\justifying
+	
+	\textbf{Not all configurations that are generated are accepted.} 
+	The choice of rejecting or not a new configuration is made in such a way that, asymptotically, the configuration space is sampled 
+	according to the probability density corresponding to a particular ensemble.\footnotemark[1] 
+	
+	For example, in the canonical ensemble the average of a microscopic variable $A ( \bold{r}^N )$ is:
+	\begin{equation*}
+		\left< A \right> = \frac{1}{Z}	\int \cdots \int \, A ( \bold{r}^N ) \; e^{ -\beta \, U( \bold{r}^N)} \; d\bold{r}_1 \cdots d\bold{r}_N
+	\end{equation*}
+	Due to $e^{ -\beta \, U( \bold{r}^N)}$, some configurations contribute largely to the integral while others do it less. 
+	Thus, \textbf{it is necessary to bias the sampling in favour of those configurations most likely to occur}.
+	
+	\footnotetext[1]{\justifying In general, configurations that go against at least one of the system's constrains,  
+	e.g. due to an overlap of two hard-spheres, have to be rejected.}
+
+	
+\end{frame}
+
+\begin{frame}[label=intro-MCS3]
+	\frametitle{Introduction}
+	\framesubtitle{A summary of Monte Carlo Simulations: Metropolis method}
+	\justifying
+	
+	The Metropolis method involves the following principal steps:
+	
+	\begin{enumerate}
+		\item	Assign initial positions $\bold{r}_i$ to the $N$ molecules and compute the potential energy $U$.
+		\item Hypothesize a new configuration by arbitrarily choosing one molecule and proposing that it be moved from $\bold{r}$ through a randomly chosen distance and direction to a new position $\bold{r'}$.
+		\item Compute the total potential energy $U'$for this new configuration and accept the proposed move (allow it to occur) based on the following criteria:
+		\begin{equation}
+		\begin{cases}
+			\text{if } U' < U \Longrightarrow \text{accept with probability} = 1\\
+			\text{if } U' > U \Longrightarrow \text{accept with probability} \propto  e^{ -\beta \, (U' - U)} 
+		\end{cases}	
+		\end{equation}
+	
+	\end{enumerate}
 \end{frame}
 
 \begin{frame}
