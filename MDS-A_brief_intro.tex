@@ -196,16 +196,6 @@
 	\titlepage
 \end{frame}
 
-\note{ 
-\footnotesize{
-There are a range of techniques of a quasi-experimental character, referred to collectively as computer simulation, the importance of which in the development of liquid state theory can hardly be overstated.
-The usefulness of computer simulation relies on the fact that a sample containing a few hundred or few thousand particles is in many cases sufficiently large to simulate the behaviour of a macroscopic system. 
-There are two classic approaches: molecular dynamics and Monte Carlo. 
-Molecular dynamics has the advantage of allowing the study of time-dependent processes, but for the calculation of static properties a Monte Carlo method may be more efficient. 
-We will focus on the first.
-}
-}
-
 \usebackgroundtemplate{}
 
 \begin{frame}[allowframebreaks]\pdfbookmark[2]{Contents}{Contents}
@@ -461,6 +451,22 @@ We will focus on the first.
 	previous one, the sequence is called: \textit{Markov chain}.}
 \end{frame}
 
+\begin{frame}[label=intro-MCSeMDS]
+	\frametitle{Introduction}
+	\framesubtitle{The main differences between Monte Carlo and Molecular Dynamics}
+	\justifying
+	
+	Molecular dynamics has the advantage of allowing the study of time-dependent processes, 
+	but for the calculation of static properties a Monte Carlo method may be more efficient. 
+	
+	Although the physical and mathematical basis of Monte Carlo may be less transparent to a novice than that for molecular dynamics, Monte Carlo is usually easier than molecular dynamics to code in a high-level language. Monte Carlo is also easier to implement for system in which it is difficult to extract the intermolecular force law from the potential function.
+	
+	For determination of the simple equilibrium properties such as the pressure in atomic fluids, Monte Carlo and molecular dynamics are equally effective: both require about the same amount of computer time to attain similar levels of statistical precision. However, molecular dynamics more efficiently evaluates such properties as the heat capacities, compressibilities  and interfacial properties. 
+	Besides configurational properties, molecular dynamics also provides access to dynamic quantities such as transport coefficients and time correlation functions. Such dynamic quantities cannot generally be obtained by Monte Carlo, although certain kinds of dynamic behaviour may be deduced from Monte Carlo simulation.
+	
+	Molecular dynamics also offers certain computational advantages because of the deterministic way in which it generates trajectories. The presence of an explicit time variable allows us to estimate the length needed for a run: the duration must be al least several multiples of the relaxation time for the slowest phenomenon being studied. No such convenient guide is available for estimating the length required for a Monte Carlo calculation. Finally, many kinds of small errors in a molecular dynamics program tend to accumulate with time and so become apparent as violations of conservation principles; in contrast, subtle errors in a Monte Carlo program may not blatantly advertise their presence.
+\end{frame}
+
 \begin{frame}[label=intro-MCS1]
 	\frametitle{Introduction}
 	\framesubtitle{A summary of Monte Carlo Simulations - I}
@@ -573,13 +579,14 @@ We will focus on the first.
 									\end{cases}	
 								\end{equation*} 
 					\end{itemize}
-		\item[4.] \textbf{Evaluating property integrands}, such as $A(\bold{r}^N)$ in \eqref{eq:can_ens:avg_val}, and accumulating them in running sums
+		\item[4.] \textbf{Evaluating property integrands}, such as $A(\bold{r}^N)$ in \eqref{eq:can_ens:avg_val}, and accumulating them in 
+					running sums
 		\item[5.] \textbf{Iterate the entire process} until at least a few million of configurations have been made to obtain an adequate 
 					statistical error in the average values
 	\end{enumerate}
 	
-
 \end{frame}
+
 
 \begin{frame}
 	\frametitle{Introduction}
@@ -607,6 +614,35 @@ We will focus on the first.
 	\framesubtitle{What is a MD Simulation?}
 	\justifying
 	Molecular dynamics simulations compute the motions of individual molecules in models of solids, liquids and gasses. The key idea is motion, which describes how positions, velocities and orientations change with time. In effect, molecular dynamics constitutes a motion picture that follows molecules as they dart to and fro, twisting, turning, colliding with one another and, perhaps, colliding with their container.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Introduction}
+	\framesubtitle{What is a MD Simulation?}
+	\justifying
+Historically, the choice
+of algorithm was often determined in large part by the amount of computer
+memory needed, i.e. the number of variables that needed to be kept track of.
+Given the large memories available today, this concern has been largely
+ameliorated. Two features that we do want to mention here which were
+introduced to make molecular dynamics simulations faster are potential ``cutoffs''
+and ``neighbor lists''. (These labor saving devices can also be used for
+Monte Carlo simulations of systems with continuous symmetry.) As the
+particles move, the forces acting on them change and need to be continuously
+recomputed. A way to speed up the calculation with only a modest
+reduction in accuracy is to cut off the interaction at some suitable range and
+then make a list of all neighbors which are within some slightly larger radius.
+As time progresses, only the forces caused by neighbors within the ``cutoff
+radius’ need to be recomputed, and for large systems the reduction in effort
+can be substantial. (The list includes neighbors which are initially beyond
+the cutoff but which are near enough that they might enter the ``interacting
+region'' within the number of time steps, typically 10–20 which elapse before
+the list is updated.) With the advent of parallel computers, molecular
+dynamics algorithms have been devised that will distribute the system
+over multiple processors and allow treatment of quite large numbers of
+particles. One major constraint which remains is the limitation in maximum
+integration time and algorithmic improvement in this area is an important
+challenge for the future.
 \end{frame}
 
 \section{Technical Requirements}
