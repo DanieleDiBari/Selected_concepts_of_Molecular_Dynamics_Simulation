@@ -214,43 +214,119 @@ We will focus on the first.
 \end{frame}
 
 \section{Introduction}
-\begin{frame}[label=intro-complex_sys]
+\begin{frame}<presentation:0>[noframenumbering]
 	\setbeamertemplate{background}{white}
 	\frametitle{Introduction}
 	\framesubtitle{The problem of describing complex system}
 	\justifying
 	
 	Few systems in statistical mechanics are exactly soluble, the majority require approximations, but when their complexity increases 
-	it becomes difficult even to construct an approximate theory in a reasonable way. 
+	it becomes difficult even to construct an approximate theory in a reasonable way. 	
 	
-	\vspace*{0.4cm}
+	\vspace*{0.25cm}
 	
-	\textbf{The more complex and realistic is a system, the more difficult and interesting it becomes to describe it.} 
-	
-	\vspace*{0.4cm}
-	
+	\hspace*{0.3cm}
+	\begin{beamercolorbox}[wd=.92\textwidth,center,rounded=true]{institute in head/foot}
+   			The more complex and realistic is a system,\\
+   			the more difficult and interesting it becomes to describe it.
+  	\end{beamercolorbox}%
+  	
+  	\vspace*{0.2cm}
+		
 	In this case, an increase in the complexity raises the necessity of having exact results available, both to test existing 
 	approximation methods and to point the way towards new approaches. 	
 	
+	\vspace*{0.2cm}
+	
+%	\begin{itemize}\justifying
+%		\item	\textbf{Computer simulations allow to calculate the essentially exact results for a given model without having to rely on 
+%				approximate theories.} 
+%	\end{itemize}
+	
+	\begin{columns}
+		\begin{column}{0.1\textwidth}
+		\raggedleft
+			\hspace*{0.5cm}\textcolor{itemblue}{$\blacktriangleright$}
+			
+			\vspace*{0.2cm}
+			
+			\hspace*{0.5cm}\textcolor{itemblue}{$\blacktriangleright$}
+		\end{column}
+		
+		\begin{column}{0.8\textwidth}\justifying
+			\textbf{Computer simulations allow to calculate the essentially exact results for a given model without having to rely on 
+				approximate theories.} 
+		\end{column}
+		
+		\begin{column}{0.1\textwidth}
+			\textcolor{itemblue}{$\blacktriangleleft$}
+			
+			\vspace*{0.2cm}			
+			
+			\textcolor{itemblue}{$\blacktriangleleft$}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[label=intro-complex_sys]
+	\frametitle{Introduction}
+	\framesubtitle{The problem of describing complex system}
+	\justifying
+	
+	Few systems in statistical mechanics are exactly soluble, the majority require approximations, but when their complexity increases 
+	it becomes difficult even to construct an approximate theory in a reasonable way. 	
+	
+	\vspace*{0.4cm}
+	
+	\hspace*{0.3cm}
+	\begin{beamercolorbox}[wd=.92\textwidth,center,rounded=true]{institute in head/foot}
+   			The more complex and realistic is a system,\\
+   			the more difficult and interesting it becomes to describe it.
+  	\end{beamercolorbox}%
+  	
+  	\vspace*{0.35cm}
+		
+	In this case, an increase in the complexity raises the necessity of having exact results available, both to test existing 
+	approximation methods and to point the way towards new approaches. 	
+		
+%	\begin{itemize}\justifying
+%		\item	\textbf{Computer simulations allow to calculate the essentially exact results for a given model without having to rely on 
+%				approximate theories.} 
+%	\end{itemize}
+
 \end{frame}
 
 
 \begin{frame}[label=intro-why_use_CS]
 	\frametitle{Introduction}
-	\framesubtitle{Why to use Computer Simulation?}
+	\framesubtitle{Why to use computer simulations?}
 	\justifying
-	Computer simulations allow to calculate the essentially exact results for a given model without having to rely on approximate theories. 
 	
-	\begin{itemize}\justifying
-		\item[$\blacktriangleright$] \textbf{TEST THE MODELS:} comparing the results of the simulation with those of a real experiment. 
-		If there is disagreement, the model is inadequate - it is necessary to improve on the estimate of the intermolecular interactions.
-		\item[$\blacktriangleright$] \textbf{TEST THE THEORIES:} comparing the results of the simulation with the predictions of an 
-		approximate analytical theory applied to the same mode. If there is disagreement, the theory is flawed.\footnotemark[1] 
-	\end{itemize}	
+	Computer simulations allow to calculate the essentially exact results for a given model without having to rely on approximate theories.
 	
-	\footnotetext[1]{\justifying The computer simulation plays the role of the experiment designed to test the theory. This method of 
-	screening theories before we apply them to the real world is called a \textit{computer experiment}.}
+	\begin{itemize}\small{\justifying
+		\item[$\blacktriangleright$] 	\textbf{TEST THE MODELS:} comparing the results of the simulation with those of a real experiment. 
+												If there is disagreement, the model is inadequate - it is necessary to improve on the estimate of the 
+												intermolecular interactions.
+
+		\vspace*{0.1cm}												
+
+		\item[$\blacktriangleright$] 	\textbf{TEST THE THEORIES:} comparing the results of the simulation with the predictions of an 
+												approximate analytical theory applied to the same model. If there is disagreement, the theory is 
+												flawed - the simulation plays the role of the experiment designed to test the theory. 
+												This method of screening theories before we apply them to the real world is called a 
+												\textit{computer experiment}.
+
+		\vspace*{0.1cm}												
+												
+		\item[$\blacktriangleright$] 	\textbf{MAKE NUMERICAL PREDICTIONS:} useful to describe a tho- ught experiment and to 
+												integrate the macroscopic information with the atomistic level provided by the simulation.
+	}\end{itemize}	
+	
+	%\footnotetext[1]{\justifying The computer simulation plays the role of the experiment designed to test the theory. This method of 
+	%screening theories before we apply them to the real world is called a \textit{computer experiment}.}
 \end{frame}
+
 
 \begin{frame}[label=intro-virtual_lab]
 	\frametitle{Introduction}
@@ -274,14 +350,66 @@ We will focus on the first.
 
 \end{frame}
 
-\note{
-	The most common application of computer simulations is to \textbf{predict the properties of materials} 
-	(even those that have not yet been made).
+\begin{frame}[label=intro-molecular_sim1]
+	\frametitle{Introduction}
+	\framesubtitle{Molecular simulations}
+	\justifying
+	
+	Molecular simulations are computer simulations that study systems from a molecular point of view. 
+	\textbf{Starting from an atomistic level, this simulations are used to 
+	predict and better understand the properties of complex materials}.\textbf{\footnotemark[1]}
+	
+	\vspace*{0.25cm}
+	
+	Molecular simulations provide \underline{a direct route from the microscopic} \underline{details of a system}
+	(the masses of the atoms, the	interactions between them, etc.) \underline{to macroscopic properties of experimental interest}
+	(the equation of state, transport coefficients and so on).
+	
+	\vspace*{0.25cm}
 
-	The obvious \textbf{downside} is that the results are only as good as the numerical model and the results can be artificially biased 
-	if the simulation is unable to sample an adequate number of microstates over the time it is allowed to run.
-}
+	The usefulness of this type of simulations rely on the fact that \textbf{a sample containing a few thousand of particles usually is sufficiently large to simulate the behaviour of a macroscopic system}.
+	
+	\footnotetext[1]{Even the materials that have not yet been made.}
+\end{frame}
 
+%\begin{frame}[label=intro-molecular_sim2]
+%	\frametitle{Introduction}
+%	\framesubtitle{Molecular simulations - II}
+%	\justifying
+%	
+%	It is clear that molecular simulations have to be able to computing at least the equilibrium properties of a 
+%	\textbf{many-body system} and, hopefully, also those of transporting process.
+%	
+%	\vspace*{0.25cm}
+%
+%	To perform this type of numerical simulation, it is necessary to \textbf{sample the phase-space} of the system. 
+%	When this is done, one has the positions and momenta of all the particles of the system. Thus it is possible to the evaluate the
+%	microscopic value of all observables and, eventually, to average them over time or phase-space.
+%
+%	\vspace*{0.25cm}
+%	
+%	The downside is that the results of this simulations are only as good as the numerical model and the results can be artificially 
+%	biased if the simulation is unable to sample an adequate number of microstates over the time it is allowed to run.
+%\end{frame}
+
+\begin{frame}[label=intro-molecular_sim2]
+	\frametitle{Introduction}
+	\framesubtitle{Molecular simulations and statistical mechanics}
+	\justifying
+
+	Molecular simulations allow the \textbf{study of the properties of many-particle systems}. 
+	However, not all properties can be directly measured in a simulation. Conversely, most of the quantities that can be measured in a 
+	simulation do not correspond to properties that are measured in real experiments.
+	
+	\vspace*{0.25cm}
+	
+	Actually, \underline{molecular simulations generate information at the micro}-\\
+	\underline{scopic level} (atomic and molecular positions, velocities, etc.) 
+	and the conversion of this very detailed information into macroscopic terms (pressure, internal energy, etc.) is the field of the 
+	statistical mechanics. 
+	Thus, the language of \textbf{statistical mechanics is necessary to use these simulations as the numerical counterpart of experiments}.
+	
+\end{frame}
 
 \begin{frame}[label=intro-principal_steps]
 	\frametitle{Introduction}
@@ -430,7 +558,7 @@ We will focus on the first.
 	\justifying
 	
 	\begin{enumerate}\justifying
-		\item[3] \textbf{Verifying} whether \textbf{the trial configuration} must be rejected:
+		\item[3.] \textbf{Verifying} whether \textbf{the trial configuration} must be rejected:
 					\begin{itemize}\justifying
 						\item \bluetextbf{yes:} count the old configuration $n$ as the new configuration $m$ and repeat the process from 
 								step 1
@@ -445,8 +573,8 @@ We will focus on the first.
 									\end{cases}	
 								\end{equation*} 
 					\end{itemize}
-		\item[4] \textbf{Evaluating property integrands}, such as $A(\bold{r}^N)$ in \eqref{eq:can_ens:avg_val}, and accumulating them in running sums
-		\item[5] \textbf{Iterate the entire process} until at least a few million of configurations have been made to obtain an adequate 
+		\item[4.] \textbf{Evaluating property integrands}, such as $A(\bold{r}^N)$ in \eqref{eq:can_ens:avg_val}, and accumulating them in running sums
+		\item[5.] \textbf{Iterate the entire process} until at least a few million of configurations have been made to obtain an adequate 
 					statistical error in the average values
 	\end{enumerate}
 	
@@ -455,35 +583,31 @@ We will focus on the first.
 
 \begin{frame}
 	\frametitle{Introduction}
-	\framesubtitle{What is a MD Simulation?}
+	\framesubtitle{What is a Molecular Dynamics Simulation?}
 	\justifying
 	Molecular Dynamics simulation is a technique for computing the equilibrium and transport properties of a classical many-body system. 
 	In this context, the word classical means that the nuclear motion of the constituent particles obeys the laws of classical mechanics. 
 	This is an excellent approximation for a wide range of materials.
 	Only when we consider the translational or rotational motion of light atoms or molecules (He, $\text{H}_2$, $\text{D}_2$) 
 	or vibrational motion with a frequency $\nu$ such that $h \nu < k_B T$ should we worry about quantum effects.
+	
+	
+%	One of the main approximation usually done in molecular simulation is to assume that the motion of the nuclei can be described by 
+%	Newton's law. Thus it is possible to use the theoretical background of the classical statistical mechanics to measure the thermodynamic 
+%	averages. 
+%
+%	This is an excellent approximation for a wide range of materials.
+%	Only when we consider the translational or rotational motion of light atoms or molecules (He, $\text{H}_2$, $\text{D}_2$) 
+%	or vibrational motion with a frequency $\nu$ such that $h \nu < k_B T$ should we worry about quantum effects.
 \end{frame}
+
 
 \begin{frame}
 	\frametitle{Introduction}
 	\framesubtitle{What is a MD Simulation?}
 	\justifying
-	Molecular Dynamics simulation is a technique for computing the equilibrium and transport properties of a classical many-body system. 
-	In this context, the word classical means that the nuclear motion of the constituent particles obeys the laws of classical mechanics. 
-	This is an excellent approximation for a wide range of materials.
-	Only when we consider the translational or rotational motion of light atoms or molecules (He, $\text{H}_2$, $\text{D}_2$) 
-	or vibrational motion with a frequency $\nu$ such that $h \nu < k_B T$ should we worry about quantum effects.
+	Molecular dynamics simulations compute the motions of individual molecules in models of solids, liquids and gasses. The key idea is motion, which describes how positions, velocities and orientations change with time. In effect, molecular dynamics constitutes a motion picture that follows molecules as they dart to and fro, twisting, turning, colliding with one another and, perhaps, colliding with their container.
 \end{frame}
-\note{
-\footnotesize{
-We will assume that the motion of the nuclei can be described by Newton's law. This approximation breaks down clearly for very light atoms (H, De, He) and for all vibrational motions whose characteristic frequency, translated in energy, is comparable or larger than the thermal energy $k_{B} T$.
-Performing numerical simulations, we sample the system phase-space and hence we have access to positions rN and momenta pN of all atoms in the system. From this information the microscopic value of all observables which are function of (rN,pN) can be evaluated and, eventually, averaged over time or phase-space.
-Numerical simulations can be considered as a tool for performing numerical experiments. In this respect, simulations can be used for different applications: 
-reproduce an existing experimental result, to complement the macroscopic information with the atomistic level provided by the simulation;
-to produce a numerical prediction of a gedanken experiment;
-for checking theoretical approximations based on model systems.
-}
-}
 
 \section{Technical Requirements}
 \subsection{from Physics Goals}
