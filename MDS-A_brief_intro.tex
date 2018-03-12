@@ -10,6 +10,7 @@
 \usepackage{ragged2e} 							% pacchetto che contiene il comando \justifying
 %\apptocmd{\frame}{}{\justifying}{}  	% --> applica la giustificazione a tutti i frame del documento
 %\justifying											% --> applica la giustificazione a tutto il documento
+\usepackage{hyperref}
 
 % graphics style
 \usepackage{graphicx}
@@ -431,10 +432,10 @@
 
 \begin{frame}[label=intro-diff_typesd]
 	\frametitle{Introduction}
-	\framesubtitle{Different types of Computer Simulations}
+	\framesubtitle{Different types of computer simulations}
 	\justifying
 	
-	\textbf{Molecular dynamics -} The positions are obtained by numerically solving differential equations of motion and hence they 
+	\textbf{Molecular Dynamics -} The positions are obtained by numerically solving differential equations of motion and hence they 
 	are connected in time - the positions reveal dynamics of individual molecules as in a motion picture. 
 	
 	\vspace*{0.3cm}
@@ -453,68 +454,21 @@
 
 \begin{frame}[label=intro-MCSeMDS]
 	\frametitle{Introduction}
-	\framesubtitle{The main differences between Molecular Dynamics and Monte Carlo - I}
-	\justifying
-		
-%	Molecular dynamics has the advantage of allowing the study of time-dependent processes, 
-%	but for the calculation of static properties a Monte Carlo method may be more efficient. 
-	
-%	Although the physical and mathematical basis of Monte Carlo may be less transparent to a novice than that for molecular dynamics, 
-	Monte Carlo is usually easier to code in a high-level language and, in general, to implement when the 
-	intermolecular force law is difficult to extract from the potential function.
-	
-	\vspace*{0.3cm}
-	
-	For the determination of equilibrium properties, the two methods are equally effective
-	- they require about the same amount of computing time to attain similar levels of statistical precision. 
-	
-	\vspace*{0.3cm}
-	
-	Molecular Dynamics has the advantage of allowing the study of time-dependent processes such as transport coefficients and time 
-	correlation functions that cannot generally be obtained by Monte Carlo.\footnotemark[1]
-		
-	\footnotetext[1]{Although certain kinds of dynamic behaviour may be deduced from Monte Carlo simulation.}
-
-\end{frame}
-
-\begin{frame}[label=intro-MCSeMDS]
-	\frametitle{Introduction}
-	\framesubtitle{The main differences between Molecular Dynamics and Monte Carlo - II}
-	\justifying
-	
-	Molecular Dynamics also offers certain  \underline{computational advantages}
-	\underline{because of the deterministic way in which it generates trajectories}.
-
-	\vspace*{0.3cm}
-	
-	The presence of an explicit time variable allows to \textbf{roughly estimate the length needed for the run} -
-	al least several multiples of the relaxation time (depending on the number of particles). 
-	\textbf{No such convenient guide is available for a Monte Carlo calculation}. 
-
-	\vspace*{0.3cm}
-		
-	Finally, in a Molecular Dynamics program, small errors tend to accumulate with time involving clear violations of conservation principles 
-	that allow to reveal them. 
-	On the contrary, in a Monte Carlo program this does not happen, thus small errors may be not easy to reveal.
-%	Finally, many kinds of small errors in a Molecular Dynamics program tend to accumulate with time and so become apparent as 
-%	violations of conservation principles; in contrast, small errors in a Monte Carlo program may not clearly advertise their presence.
-\end{frame}
-
-\begin{frame}[label=intro-MCSeMDS]
-	\frametitle{Introduction}
 	\framesubtitle{Molecular Dynamics or  Monte Carlo - I}
 	\justifying
 	
-	The choice between Molecular Dynamics and Monte Carlo is largely determined by the phenomenon under investigation.
+	The choice between Molecular Dynamics (MD) and Monte Carlo (MC) is largely determined by the phenomenon under investigation.
 	
 	\begin{itemize}\justifying\small{
-		\item \textbf{GAS (}\textit{or other low density systems}\textbf{) - Monte Carlo is preferable:}\\
+		\item \textbf{Monte Carlo is preferable for GAS (}\textit{or other low density systems}\textbf{):}\\
 		There can be large energy barriers (of several $k_B T$) which can lead to molecules being trapped in a few low energy 
 		conformations in a MD simulation, leading to poor conformational sampling.
 		In contrast, the random moves in a MC simulation can easily lead to barrier crossings. 
 		
-		\item \textbf{LIQUIDS - Molecular Dynamics is preferable:}\\
-		Collisions exchange energy between molecules, enabling barrier crossings, improving the ability of MD to sample conformations.
+		\vspace*{0.07cm}
+		
+		\item \textbf{Molecular Dynamics is preferable for LIQUIDS:}\\
+		Molecular Collisions exchange energy between them, enabling barrier crossings, improving the ability of MD to sample conformations.
 		For a MC simulation, there is a large probability of selecting random moves for which two or more molecules overlap leading to large 
 		number of rejected moves and a decrease in efficiency of sampling.\footnote{However, the ability of MC to make unphysical moves, for example to flip a molecule around, can in some cases compensate for this.}
 	}\end{itemize}
@@ -528,20 +482,33 @@
 	\frametitle{Introduction}
 	\framesubtitle{Molecular Dynamics or  Monte Carlo - II}
 	\justifying
-		
-	MD also handles collective motions better than MC. However, recently methods such as Configurational Bias Monte Carlo and Hybrid Monte Carlo have been developed to improve the performance of MC simulations. 
+			
+	In any cases, there are some situations where only one method is appropriate. In particular:
 	
-	There are some situations where only one method is appropriate. Determination of transport properties such as viscosity coefficients, is largely only possible using MD, as MC lacks an objective definition of time (except in some special cases such as the bond fluctuation model for polymers). On the other hand MC can be used for simulations with varying particle numbers (Grand Canonical Monte Carlo) by adding moves for the creation and destruction of particles. 
+	\vspace*{0.2cm}
 
+	\begin{enumerate}\justifying
+		\item	\textbf{Determination of transport properties}, such as viscosity coefficients, is largely only possible using
+					\textbf{Molecular Dynamics}, as Monte Carlo lacks an objective definition of time 
+					(except in some special cases such as the bond fluctuation model for polymers). 
+					
+		\vspace*{0.2cm}
+
+		\item	%On the other hand, \textbf{Monte Carlo} can be used for simulations with \textbf{varying particle numbers} 
+					%(Grand Canonical Monte Carlo) by adding moves for the creation and destruction of particles.
+					Simulations with \textbf{varying particle numbers} that can be made using \textbf{Monte Carlo} methods
+					(Grand Canonical Monte Carlo) by adding moves for the creation and destruction of particles.
+	\end{enumerate}	 
+	
 %[Dr S J Clark - http://cmt.dur.ac.uk/sjc/thesis_dlc/node58.html]
 \end{frame}
 	
 \begin{frame}[label=intro-MCS1]
 	\frametitle{Introduction}
-	\framesubtitle{A summary of Monte Carlo Simulations - I}
+	\framesubtitle{A summary of Monte Carlo simulations - I}
 	\justifying
 	
-	Monte Carlo Simulation is a purely stochastic method typically used to evaluate statistical-mechanical ensemble averages, i.e. 
+	Monte Carlo simulation is a purely stochastic method typically used to evaluate statistical-mechanical ensemble averages, i.e. 
 	multidimensional integrals performed of a $N$-body system. 
 	
 	\vspace*{0.3cm}
@@ -559,7 +526,7 @@
 
 \begin{frame}[label=intro-MCS2]
 	\frametitle{Introduction}
-	\framesubtitle{A summary of Monte Carlo Simulations - II}
+	\framesubtitle{A summary of Monte Carlo simulations - II}
 	\justifying
 	
 	\vspace*{-0.2cm}
@@ -582,7 +549,7 @@
 
 \begin{frame}[label=intro-MCS3]
 	\frametitle{Introduction}
-	\framesubtitle{A summary of the Monte Carlo simulations: Metropolis method}
+	\framesubtitle{A summary of the Monte Carlo simulations: Metropolis method - I}
 	\justifying	
 	
 	\vspace*{0.2cm}
@@ -629,7 +596,7 @@
 
 \begin{frame}[label=intro-MCS4]
 	\frametitle{Introduction}
-	\framesubtitle{A summary of the Monte Carlo simulations: Metropolis method}
+	\framesubtitle{A summary of the Monte Carlo simulations: Metropolis method - II}
 	\justifying
 	
 	\begin{enumerate}\justifying
@@ -842,7 +809,13 @@ challenge for the future.
 	\bibitem{books:Tuckerman}
 	Tuckerman, M. E. (2010). \textit{Statistical Mechanics: Theory and Molecular Simulation}. New York, United States: 
 	Oxford University Press. 
-	}
+	
+	
+	\bibitem{site:Cheung}
+	Cheung, D. L. (2002). \textit{Structures and Properties of Liquid Crystals and Related Molecules from Computer Simulation} 
+	 (Ph.D. Thesis).\\Retrieved from \url{http://cmt.dur.ac.uk/sjc/thesis_dlc/}
+	 
+	 }
 
 	\framebreak
 	\hspace{-0.7cm}\normalsize{\bluetextbf{On the Transition Radiation Detector (TRD):}}		
