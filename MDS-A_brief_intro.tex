@@ -625,15 +625,66 @@
 
 
 \begin{frame}
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{Computing the internal motion of classical many-body systems}
+	\justifying
+
+	Molecular Dynamics simulations compute the motions of individual molecules for a classical many-body system in order to describe the 
+	equilibrium and transport properties of solids, liquids and gasses.	
+	
+	\vspace*{0.2cm}
+	
+	\hspace*{0.25cm}
+	\begin{beamercolorbox}[wd=.93\textwidth,center,rounded=true]{institute in head/foot}
+	\small{
+   			Although this modelling of the matter at the microscopic level\\
+   			(\textit{based on a comprehensive description of the constituent particle})\\
+   			must in principle be based on quantum mechanics,\\
+   			\hspace*{0.1cm}\textbf{Molecular Dynamics generally adopts a classical point of view}
+   	}
+  	\end{beamercolorbox}%
+	
+	\vspace*{0.2cm}
+	
+	In this context, the word classical means that the nuclear motion of the constituent particles obeys the laws of classical mechanics 
+	(the motion is described by the second Newton's law). 
+	
+	\vspace*{0.2cm}
+		
+	This is an \textbf{excellent approximation for a wide range of materials}.	
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{Classical approximation}
+	\justifying
+	
+	\vspace*{-0.25cm}
+	
+	\begin{block}{\small{Neither relativistic nor quantum effects are considered}}\justifying\small{
+		\textbf{Special relativity} does not allow that information travels faster than light; Molecular Dynamics simulations assume forces with 
+		an infinite speed of propagation. 
+	
+		\textbf{Quantum mechanics} has at its base the uncertainty principle; Molecular Dynamics requires, and provides, complete 
+		information about position and momentum at all times.
+	}\end{block}
+
+	\vspace*{0.05cm}
+	
+	In practice, the phenomena studied by Molecular Dynamics simulation are those where relativistic effects are not observed and 
+	quantum effects can, if necessary, be incorporated as semi-classical corrections derived from quantum theory.\footnotemark[1]
+
+	\footnotetext[1]{\justifying For example, dealing with very light atoms or molecules (e.g. He, $\text{H}_2$, $\text{D}_2$) or with 
+	vibrational motions whose characteristic frequency, translated in energy, is comparable or larger than $k_B T$, quantum effects became 
+	not negligible.}
+\end{frame}
+
+\begin{frame}
 	\frametitle{Introduction}
 	\framesubtitle{What is a Molecular Dynamics Simulation?}
 	\justifying
-	Molecular Dynamics simulation is a technique for computing the equilibrium and transport properties of a classical many-body system. 
-	In this context, the word classical means that the nuclear motion of the constituent particles obeys the laws of classical mechanics. 
-	This is an excellent approximation for a wide range of materials.
-	Only when we consider the translational or rotational motion of light atoms or molecules (He, $\text{H}_2$, $\text{D}_2$) 
-	or vibrational motion with a frequency $\nu$ such that $h \nu < k_B T$ should we worry about quantum effects.
-	
+
 	
 %	One of the main approximation usually done in molecular simulation is to assume that the motion of the nuclei can be described by 
 %	Newton's law. Thus it is possible to use the theoretical background of the classical statistical mechanics to measure the thermodynamic 
@@ -643,7 +694,6 @@
 %	Only when we consider the translational or rotational motion of light atoms or molecules (He, $\text{H}_2$, $\text{D}_2$) 
 %	or vibrational motion with a frequency $\nu$ such that $h \nu < k_B T$ should we worry about quantum effects.
 \end{frame}
-
 
 \begin{frame}
 	\frametitle{Introduction}
