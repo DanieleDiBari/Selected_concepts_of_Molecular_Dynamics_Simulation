@@ -341,9 +341,11 @@
 
 \end{frame}
 
-\begin{frame}[label=intro-molecular_sim1]
-	\frametitle{Introduction}
-	\framesubtitle{Molecular simulations}
+
+\section{Molecular simulations}
+\begin{frame}[label=molecular_sim]
+	\frametitle{Molecular simulations}
+	\framesubtitle{From computer simulations to molecular simulations}
 	\justifying
 	
 	Molecular simulations are computer simulations that study systems from a molecular point of view. 
@@ -383,8 +385,8 @@
 %	biased if the simulation is unable to sample an adequate number of microstates over the time it is allowed to run.
 %\end{frame}
 
-\begin{frame}[label=intro-molecular_sim2]
-	\frametitle{Introduction}
+\begin{frame}[label=molecular_sim-stat_mech]
+	\frametitle{Molecular simulations}
 	\framesubtitle{Molecular simulations and statistical mechanics}
 	\justifying
 
@@ -402,8 +404,10 @@
 	
 \end{frame}
 
-\begin{frame}[label=intro-principal_steps]
-	\frametitle{Introduction}
+
+\subsection{Principal steps}
+\begin{frame}[label=molecular_sim-principal_steps]
+	\frametitle{Molecular simulations}
 	\framesubtitle{The principal steps of molecular simulations}
 	\justifying
 	
@@ -430,9 +434,11 @@
 	
 \end{frame}
 
-\begin{frame}[label=intro-diff_typesd]
-	\frametitle{Introduction}
-	\framesubtitle{Different types of computer simulations}
+
+\subsection{Different types}
+\begin{frame}[label=molecular_sim-diff_typesd]
+	\frametitle{Molecular simulations}
+	\framesubtitle{Different types of molecular simulations}
 	\justifying
 	
 	\textbf{Molecular Dynamics -} The positions are obtained by numerically solving differential equations of motion and hence they 
@@ -452,8 +458,10 @@
 	previous one, the sequence is called: \textit{Markov chain}.}
 \end{frame}
 
-\begin{frame}[label=intro-MCSeMDS]
-	\frametitle{Introduction}
+
+\subsubsection{Molecular Dynamics or  Monte Carlo}
+\begin{frame}[label=molecular_sim-MCSvsMDS1]
+	\frametitle{Molecular simulations}
 	\framesubtitle{Molecular Dynamics or  Monte Carlo - I}
 	\justifying
 	
@@ -473,13 +481,12 @@
 		number of rejected moves and a decrease in efficiency of sampling.\footnote{However, the ability of MC to make unphysical moves, for example to flip a molecule around, can in some cases compensate for this.}
 	}\end{itemize}
 	
-	
-
 %[Dr S J Clark - http://cmt.dur.ac.uk/sjc/thesis_dlc/node58.html]
 \end{frame}
 
-\begin{frame}[label=intro-MCSeMDS]
-	\frametitle{Introduction}
+
+\begin{frame}[label=molecular_sim-MCSvsMDS2]
+	\frametitle{Molecular simulations}
 	\framesubtitle{Molecular Dynamics or  Monte Carlo - II}
 	\justifying
 			
@@ -503,8 +510,10 @@
 %[Dr S J Clark - http://cmt.dur.ac.uk/sjc/thesis_dlc/node58.html]
 \end{frame}
 	
-\begin{frame}[label=intro-MCS1]
-	\frametitle{Introduction}
+
+\section{Monte Carlo simulation}
+\begin{frame}[label=MCS-intro1]
+	\frametitle{Monte Carlo simulations}
 	\framesubtitle{A summary of Monte Carlo simulations - I}
 	\justifying
 	
@@ -524,8 +533,9 @@
 	
 \end{frame}
 
-\begin{frame}[label=intro-MCS2]
-	\frametitle{Introduction}
+
+\begin{frame}[label=MCS-intro2]
+	\frametitle{Monte Carlo simulations}
 	\framesubtitle{A summary of Monte Carlo simulations - II}
 	\justifying
 	
@@ -544,11 +554,12 @@
 	\footnotetext[1]{\justifying In general, configurations that go against at least one of the system's constrains,  
 	e.g. due to an overlap of two hard-spheres, have to be rejected.}
 
-	
 \end{frame}
 
-\begin{frame}[label=intro-MCS3]
-	\frametitle{Introduction}
+
+\subsection{Metropolis method}
+\begin{frame}[label=MCS-Metropolis1]
+	\frametitle{Monte Carlo simulations}
 	\framesubtitle{A summary of the Monte Carlo simulations: Metropolis method - I}
 	\justifying	
 	
@@ -594,8 +605,9 @@
 	
 \end{frame}
 
-\begin{frame}[label=intro-MCS4]
-	\frametitle{Introduction}
+
+\begin{frame}[label=MCS-Metropolis2]
+	\frametitle{Monte Carlo simulations}
 	\framesubtitle{A summary of the Monte Carlo simulations: Metropolis method - II}
 	\justifying
 	
@@ -624,7 +636,8 @@
 \end{frame}
 
 
-\begin{frame}
+\section{Molecular Dynamics Simulations}
+\begin{frame}[label=MDS-intro1]
 	\frametitle{Molecular Dynamics Simulations}
 	\framesubtitle{Computing the internal motion of classical many-body systems}
 	\justifying
@@ -637,9 +650,9 @@
 	\hspace*{0.25cm}
 	\begin{beamercolorbox}[wd=.93\textwidth,center,rounded=true]{institute in head/foot}
 	\small{
-   			Although this modelling of the matter at the microscopic level\\
-   			(\textit{based on a comprehensive description of the constituent particle})\\
-   			must in principle be based on quantum mechanics,\\
+   			Although this modelling of the matter at the microscopic level
+   			%(\textit{based on a comprehensive description of the constituent particle})\\
+   			must be, in principle, based on quantum mechanics,\\
    			\hspace*{0.1cm}\textbf{Molecular Dynamics generally adopts a classical point of view}
    	}
   	\end{beamercolorbox}%
@@ -655,7 +668,7 @@
 \end{frame}
 
 
-\begin{frame}
+\begin{frame}[label=MDS-intro2]
 	\frametitle{Molecular Dynamics Simulations}
 	\framesubtitle{Classical approximation}
 	\justifying
@@ -663,7 +676,7 @@
 	\vspace*{-0.25cm}
 	
 	\begin{block}{\small{Neither relativistic nor quantum effects are considered}}\justifying\small{
-		\textbf{Special relativity} does not allow that information travels faster than light; Molecular Dynamics simulations assume forces with 
+		\textbf{Special relativity} does not allow information to travel faster than light; Molecular Dynamics simulations assume forces with 
 		an infinite speed of propagation. 
 	
 		\textbf{Quantum mechanics} has at its base the uncertainty principle; Molecular Dynamics requires, and provides, complete 
