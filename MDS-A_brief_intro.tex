@@ -807,7 +807,7 @@
 \subsection{Numerical integrators}
 \begin{frame}[label=MDS-integrators1]
 	\frametitle{Molecular Dynamics Simulations}
-	\framesubtitle{The main aspects}
+	\framesubtitle{Main aspects of the calculation}
 	\justifying
 	
 	There are three main aspects for a molecular dynamics calculation: 
@@ -821,10 +821,157 @@
 	Each of these aspects can strongly influence the quality of the calculation and its ability to sample a sufficient number of microstates to 
 	obtain reliable averages. 
 	
-	In the following slides define a numerical integrator or solver for the equations of motion will be performed.
-	The present work focuses on the problem of devising a numerical integrator or solver for the equations of motion.
+	The present work focuses on the problem of devising a numerical integrator for the equations of motion.
 
 \end{frame}
+
+\begin{frame}
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{Criteria for a good numerical integrator - I}
+	\justifying
+	
+	\vspace*{-0.1cm}
+	A good MD program requires a good algorithm to integrate the equations of motion.	
+	In this sense, \textbf{the choice of the numerical integrator employed is crucial}. 
+	However, although it is easy to recognize a bad integrator, it is not obvious what criteria a good integrator should satisfy. 
+	Indeed there are different points to consider.
+	
+	\begin{itemize}\justifying
+		\item	\bluetextbf{Speed is not very relevant} because, usually, the fraction of time spent on integrating the equations of motion is small 
+				compared to computing the interactions.
+		
+		\item	\bluetextbf{Accuracy for large $\Delta t$ is more important}: the bigger is the $\Delta t$ used, the fewer are evaluations of the 
+				forces needed. Hence, it is useful to employ a sophisticated algorithm that allows use of a long $\Delta t$.\footnotemark[1]
+	\end{itemize}
+	
+	\footnotetext[1]{\justifying Actually exist some algorithms that, storing information on increasingly higher-order derivatives of the particle coordinates, allow to use of large $\Delta t$. They require more memory storage, but typically this is not a serious drawback.}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{Criteria for a good numerical integrator - II}
+	\justifying
+	
+	\begin{itemize}\justifying
+		\item	\bluetextbf{Energy conservation is an important criterion.}
+				The sophisticated higher-order algorithms tend to have very good energy conservation for short times 
+				(i.e., during a few $\Delta t$).
+				Nevertheless, they often have the undesirable feature that the overall energy drifts for long times. In contrast, simpler algorithms 
+				tend to have only moderate short-term energy conservation but little long-term drift.
+		
+		\item	\bluetextbf{Time reversibility:} Since the equations of motion are time reversible, so should be the numerical integrator employed. 
+				In fact, many algorithms are not time reversible - future and past phase space coordinates do not play a symmetric 
+				role.\footnotemark[1]
+	\end{itemize}
+	
+	\footnotetext[1]{For instance the predictor-corrector schemes and many of the schemes used to deal with constraints.}
+	%However, at the moment, there are not algorithms that are able to accurately predicts the trajectory of all particles for both short and long times.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{Criteria for a good numerical integrator - III}
+	\justifying
+	
+	The last two criteria are actually related, indeed Hamiltonian dynamics, that is symmetric in time, leaves the magnitude of any volume 
+	element in phase space unchanged. 
+	However, many numerical integrator, in particular those that are not time reversible, do not reproduce this area-preserving 
+	property and this is not compatible with energy conservation.
+	
+	Therefore, it is plausible that non-reversible algorithms will have serious long-term energy drift problems.
+	However, this not involve that the reversibility alone is sufficient to guarantee the absence of such energy drift. 
+%	Actually this property is at least compatible	with it. 	
+
+	\vspace*{0.2cm}
+	
+	\hspace*{0.25cm}
+	\begin{beamercolorbox}[wd=.93\textwidth,center,rounded=true]{institute in head/foot}
+	\small{
+   			The conservation of volume elements in phase space is a\\
+   			fundamental property for a numerical integrator to avoid\\
+   			significant	drift in the total energy with time.
+   	}
+  	\end{beamercolorbox}%
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{Finite-difference method - I}
+	\justifying
+	There are several distinct approaches to the formulation of computer methods for solving differential equations. 
+	One of the most used in the molecular dynamics simulations is:
+	
+	\begin{block}{The Finite-Difference Method - FDM}\justifying
+		The central idea of this approach is to \textbf{approximate the derivatives by differences} and thereby reduce differential equations to
+		difference equations.
+		
+		\begin{itemize}\justifying
+			\item	An \textit{analytical} problem becomes an \textit{algebraic} one.
+			\item	A problem with an \textit{infinite degree of freedom} is replaced by one with a \textit{finite degree of freedom}.
+			\item	A \textit{continuous} problem goes over to a \textit{discrete} one.
+		\end{itemize}
+	\end{block}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{Finite difference method - II}
+	\justifying
+	To introduce this argument, it is useful to start by looking at the two Taylor expansions of $f(x)$:
+	\begin{equation}\label{eq:taylor}
+		f(x \pm \Delta x) = f(x) \pm f'(x) \cdot \Delta x + \frac{1}{2} f''(x) \cdot \Delta x^2 + O(\Delta x^3)
+	\end{equation}
+	
+%	The higher order terms represented by $O(\Delta x^3)$ become less important as $\Delta x$ becomes smaller. 
+	From this equations it is possible to obtain two first approximations for the derivative of $f(x)$:
+	\begin{align*}
+		f'(x) &= \frac{f(x + \Delta x) - f(x)}{\Delta x} + O(\Delta x) = f'_F(x) + O(\Delta x)\\
+		f'(x) &= \frac{f(x) - f(x - \Delta x)}{\Delta x} + O(\Delta x) = f'_B(x) + O(\Delta x)
+	\end{align*}
+	
+	where $f'_F(x)$ and $f'_B(x)$ are the \textbf{forward and backward differences} that both involve approximation of order $O(\Delta x)$.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{Finite difference method - III}
+	\justifying
+	Subtracting the two expansions in \eqref{eq:taylor} yields:
+	\begin{equation*}
+		f'(x) = \frac{f(x + \Delta x) - f(x - \Delta x)}{2 \Delta x} + O(\Delta x^2) = f'_C(x) + O(\Delta x^2)
+	\end{equation*}
+	
+	where  $f'_C(x)$ is the \textbf{central difference} that involve an approximation of order $O(\Delta x^2)$ and thus, for small $\Delta x$, it is 
+	more accurate than $f'_F(x)$ and $f'_B(x)$. 
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{Finite difference method - Errors}
+	\justifying
+	
+	The numerical integrator employed in MD simulation generates the trajectory of the system in the phase space, allowing in this way to 
+	measure the properties of interest deriving from that trajectory.
+	
+	However, in generating trajectories, uncertainties arise from the finite-difference method used (truncation error) and from the way it is 
+	implemented (round-off error). Therefore, it is important to study not merely the FDM per se, rather the broader problem of how those 
+	methods can affect the reliability of simulation results.
+	
+	The terms truncation and round-off refer to sources of errors; however, it should be considered not only what causes errors but also how errors propagate - whether they grow as the simulations proceeds. This is the issue of algorithmic stability.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{Finite difference method - Errors}
+	\justifying
+	
+	Molecular dynamics involves nonlinear ordinary differential equations, so analytical stability analysis cannot be used. Instead, it may do an approximate analysis by linearizing the differential equations or it may attack the stability problem using the method of Lyapunov. Both strategies are cumbersome when applied to the equations of motion used in molecular dynamics, thus what it is usually done for simple simulations is a numerical analysis using trial values for the time step. That is, through a series of short test runs, it is possible to identify the critical step $\Delta t$ at which the algorithm becomes unstable and then choose a smaller operational value that establishes conservation of energy. 
+\end{frame}
+
 
 
 \begin{frame}
@@ -863,108 +1010,6 @@ integration time and algorithmic improvement in this area is an important
 challenge for the future.
 \end{frame}
 
-\section{Technical Requirements}
-\subsection{from Physics Goals}
-\begin{frame}
-    \frametitle{Technical Requirements}
-    \framesubtitle{from Physics Goals}
-    \justifying
-    
-	Physical goals involve \textbf{technical requirements for the AMS detector}:
-	
-	\begin{itemize}\justifying
-		\item	\bluetextbf{Dark Matter $\Rightarrow$}
-					to get $e^+/p$ rejection of $\sim10^{-6}$ for the measurement of the positron fraction.
-		\item	\bluetextbf{Matter/Antimatter Asymmetry $\Rightarrow$}
-					to reach a sensitivity in the search for anti-matter nuclei of $10^{-10}$ (ratio of anti-helium nuclei to helium nuclei).
-		\item	\bluetextbf{Cosmic Ray Physics $\Rightarrow$}
-					to measure the composition and spectra of charged particles with an accuracy of 1\%.
-	\end{itemize}
-	
-	Moreover, \bluetextbf{for each of these ones}, it is very important to extend, as far as possible, the energy range of the 
-	measurements.
-	
-	For AMS, the required energy range is from 0.5 to $\sim$ 2000 $GeV$.
-
-	%\footnotesize{\underline{\textbf{Note}} These requirements represent a considerable sensitivity improvement compared to the previous space-borne experiments.}
-
-\end{frame}
-
-\note{
-	In a conventional molecular dynamics simulation of a bulk fluid a system of N particles is allocated a set of initial coordinates within a cell of fixed volume, most commonly a cube. A set of velocities is also assigned, usually drawn from a Maxwell distribution appropriate to the temperature of interest and selected in such a way that the net linear momentum of the system is zero. The subsequent calculation tracks the motion of the particles through space by integration of the classical equations of motion. Equilibrium properties are obtained as time averages over the dynamical history of the system in the manner outlined in Section 2.2 and correspond to averages over a microcanonical ensemble. In modern work N is typically of order 103 or 104, though much larger systems have occasionally been studied. To minimise surface effects, and thereby simulate more closely the behaviour expected of a macroscopic system, it is customary to use a periodic boundary condition.
-}
-
-\begin{frame}
-	\frametitle{Technical Requirements}
-    \framesubtitle{from Physics Goals}	
-    
-    \begin{block}{The technical challenge of AMS-02}
-		\justifying
-		The illustrated requirements represent a considerable sensitivity improvement compared to the previous space-borne 
-		experiments.
-	\end{block}
-   	
-   	\vspace{0.25cm}
-	\small{\bluetextbf{NOTE}}
-	\vspace{-0.2cm}
-    \begin{itemize}
-    	\item[\footnotesize{$\blacktriangleright$}] 
-    		\footnotesize{\justifying
-    		There is a strong demand for precision measurements of CRs in the energy region from 10 to 1000 
-    		$GeV$ as the measurements of positron fraction, i.e.  $e^+ / (e^+ + e^-)$, by AMS-01, HEAT, PAMELA and FERMI 
-    		indicate a large deviation of this ratio from the production of $e^+$ and $e^-$ predicted by a model that includes only 
-    		ordinary CR collisions.
-    		
-    		These available measurements are both at too low an energy and of too limited statistics to shed the light on the origin of 
-    		this significant excess.
-    		
-    		AMS-02 is expected to provide definitive answers concerning the nature of this deviation.}
-   	\end{itemize}  
-   	 
-%
-%%	\vspace{0.25cm}
-%	There is a strong demand for precision measurements of cosmic rays in the energy region from 10 to 1000 GeV as the 
-%	measurements of e+/(e+ + e-) by AMS-01, HEAT, PAMELA and FERMI indicate a large deviation of this ratio from the 
-%	production of e+ and e- predicted by a model that includes only ordinary cosmic ray collisions. 
-%	
-%	These available measurements are both at too low an energy and of too limited statistics to shed the light on the origin of this 
-%	significant excess. 
-%	
-%	AMS-02 is	expected to provide definitive answers concerning the nature of this deviation.
-\end{frame}
-
-%\begin{frame}
-%	\frametitle{Technical Requirements}
-%    \framesubtitle{From Physics Goals}
-%	\begin{columns}
-%		\begin{column}{0.5\textwidth}
-%			\begin{center}
-%				\includegraphics[width=0.95\columnwidth]{Schem_Requirements-DM.png}
-%			\end{center}
-%		\end{column}
-%
-%		\begin{column}{0.5\textwidth}
-%			\begin{center}
-%				\includegraphics[width=0.95\columnwidth]{Schem_Requirements-Antimatter.png}
-%			\end{center}
-%		\end{column}
-%	\end{columns}
-%\end{frame}
-
-\begin{frame}[label=AMS-apparatus_img]
-	\frametitle{Technical Requirement}
-	\framesubtitle{general structure of the AMS apparatus}
-	\begin{center}
-		\vspace{-0.15cm}
-		%\hspace{-0.35cm}\includegraphics[height=0.7\paperheight]{Schem_structure_of_AMS.png}
-
-		\vspace{-0.35cm}
-
-		\hspace{0.25cm}\hyperlink{AMS-apparatus_list}{\textbf{\beamerbutton{link to AMS apparatus list}}}
-	\end{center}
-	%\vspace{-0.25cm}
-\end{frame}
-
 \section{Bibliography}
 \begin{frame}[allowframebreaks]
 	\frametitle{Sources}
@@ -974,7 +1019,7 @@ challenge for the future.
 	
 	\begin{thebibliography}{99}
 	\setbeamertemplate{bibliography item}[text]
-	\scriptsize{
+	\scriptsize{\justifying
 	\bibitem{books:Allen}
 	Allen, M., \& Tildesley, D. (1987). \textit{Computer Simulation of Liquids}. Oxford, England, Clarendon Press.
 
@@ -995,106 +1040,12 @@ challenge for the future.
 	
 	\bibitem{site:Cheung}
 	Cheung, D. L. (2002). \textit{Structures and Properties of Liquid Crystals and Related Molecules from Computer Simulation} 
-	 (Ph.D. Thesis).\\Retrieved from \url{http://cmt.dur.ac.uk/sjc/thesis_dlc/}
+	 (Ph.D. Thesis).\\Retrieved from: \url{http://cmt.dur.ac.uk/sjc/thesis_dlc/}
 	 
+	 \justifying
+	 \bibitem{}
+	 Lynch, P. (2005–2006). \textit{Numerical Weather Prediction}. Lecture presented at Course of Meteorology \& Climate Centre in University College Dublin. \\Retrieved from: \url{http://www.atmos.umd.edu/~ekalnay/syllabi/AOSC614/NWP-CH03-1-2.pdf} 
 	 }
-
-	\framebreak
-	\hspace{-0.7cm}\normalsize{\bluetextbf{On the Transition Radiation Detector (TRD):}}		
-	
-	\scriptsize{
-	\bibitem{Kirn-1}
-	T. Kirn, ``\textit{The AMS-02 transition radiation detector}'' Nuclear Instruments and Methods in Physics Research A 581 
-	(2007) 156-159.
-	
-	\bibitem{Kirn-2}
-	T. Kirn, ``\textit{The AMS-02 TRD on the international space station}'' Nuclear Instruments and Methods in Physics Research A 
-	706 (2013) 43-47.
-	
-	\bibitem{Sun}
-	W. Sun, A. Kounine and Z. Weng, ``\textit{Measurement of the absolute charge of cosmic ray nuclei with the AMS Transition 
-	Radiation Detector}'' 33rd International Cosmic Ray Conference, Rio de Janeiro (2013).
-	}
-	
-	\vspace{0.25cm}
-	\hspace{-0.7cm}\normalsize{\bluetextbf{On the Time of Flight detector (ToF):}}
-	
-	\scriptsize{
-	\bibitem{Bindi-1}
-	V. Bindi et al., ``\textit{The scintillator detector for the fast trigger and time-of-flight (TOF) measurement of the space 
-	experiment AMS-02}'' Nuclear Instruments and Methods in Physics Research A 623 (2010) 968-981.
-	
-	\bibitem{Bindi-2}
-	V. Bindi et al., ``\textit{The AMS-02 time of flight (TOF) system: construction and overall performances in space}'' 33rd 
-	International Cosmic Ray Conference, Rio de Janeiro (2013).
-	
-	\bibitem{Bindi-3}
-	V. Bindi et al., ``\textit{Calibration and performance of the AMS-02 time of flight detector in space}'' Nuclear Instruments and 
-	Methods in Physics Research A 743 (2014) 22-29.
-	}
-	
-	\framebreak
-	\hspace{-0.7cm}\normalsize{\bluetextbf{On the Magnetic Spectrometer}}		
-	
-	\vspace{0.25cm}
-	\hspace{-0.7cm}\small{\bluetextbf{$\triangleright$ Magnet:}}
-	
-	\scriptsize{
-	\bibitem{Ahlen}
-	S. Ahlen et al., ``\textit{An antimatter spectrometer in space}'' Nuclear Instruments and Methods in Physics Research A 350 
-	(1994) 351-367.
-	
-	\bibitem{Lubelsmeyer}
-	K. L\"{u}belsmeyer et al., ``\textit{Upgrade of the Alpha Magnetic Spectrometer (AMS-02) for long term operation on the 
-	International Space Station (ISS)}'' Nuclear Instruments and Methods in Physics Research A 654 (2011) 639-648.
-	}
-	
-	\vspace{0.25cm}
-	\hspace{-0.7cm}\small{\bluetextbf{$\triangleright$ Silicon Tracker:}}
-	
-	\scriptsize{
-	\bibitem{Alcaraz}
-	J. Alcaraz et al., ``\textit{The alpha magnetic spectrometer silicon tracker: Performance results with protons and helium
-	nuclei}'' Nuclear Instruments and Methods in Physics Research A 593 (2008) 376-398.
-
-	\bibitem{Ambrosi-01}
-	G. Ambrosi et al., ``\textit{AMS-02 Track reconstruction and rigidity measurement}'' 33rd International Cosmic Ray
-	Conference, Rio de Janeiro (2013).
-	
-	\bibitem{Ambrosi-02}
-	G. Ambrosi et al., ``\textit{Nuclear Charge Measurement With the AMS-02 Silicon Tracker}'' 33rd International Cosmic Ray
-	Conference, Rio de Janeiro (2013).
-
-	\bibitem{Ambrosi-03}
-	G. Ambrosi et al., ``\textit{In-flight operations and status of the AMS-02 silicon tracker}'' PoS (ICRC2015) 690.
-	
-	\bibitem{Ambrosi-04}
-	G. Ambrosi et al., ``\textit{Nuclei Charge measurement with the AMS-02 Silicon Tracker}'' PoS (ICRC2015) 429.	
-
-	\bibitem{Azzarello}
-	P. Azzarello, ``\textit{Tests And Production Of The AMS-02 Silicon Tracker Detectors}'' PhD thesis, University of Geneva 
-	(2004).
-	
-	\bibitem{Batignani}
-	G. Batignani et al., ``\textit{DOUBLE-SIDED READOUT SILICON STRIP DETECTORS FOR THE ALEPH MINIVERTEX}'' Nuclear 
-	Instruments and Methods in Physics Research A 277 (1989) 147-153.
-
-	\bibitem{Haas}
-	D. Haas, ``\textit{The Silicon Tracker of AMS02}'' Nuclear Instruments and Methods in Physics Research A 530 (2004) 
-	173-177.
-	
-	\bibitem{Krammer}
-	M. Krammer, ``\textit{Silicon Detectors}'' XI ICFA School on Instrumentation (2010).
-	
-	\bibitem{Lutz}
-	G. Lutz, ``\textit{Semiconductor Radiation Detectors}'' Springer 1st ed. (1999).
-	
-	\bibitem{Peisert}
-	A. Peisert, ``\textit{Silicon microstrip detectors}'' Instrumentation in High Energy Physics (1992) 1-79.
-	
-	\bibitem{Pohl}
-	M. Pohl, ``\textit{AMS tracking in-orbit performance}'' PoS (VERTEX2015) 022
-	}
 	
 	\end{thebibliography}
 \end{frame}
