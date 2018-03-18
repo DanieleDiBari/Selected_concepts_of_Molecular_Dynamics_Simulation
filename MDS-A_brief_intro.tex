@@ -942,16 +942,16 @@
 	\framesubtitle{Finite difference method - A simple example II}
 	\justifying
 	Subtracting the two expansions in \eqref{eq:taylor}, yields:
-	\begin{equation*}
+	\begin{equation}\label{eq:central-dif}
 		f'(x) = \frac{f(x + \Delta x) - f(x - \Delta x)}{2 \Delta x} + O(\Delta x^2) = f'_C(x) + O(\Delta x^2)
-	\end{equation*}
+	\end{equation}
 	
-	where  $f'_C(x)$ is the \textbf{central difference} that involve an approximation of order $O(\Delta x^2)$ and thus, for small $\Delta x$, it is 
+	where  $f'_C(x)$ is the \textbf{central difference} that involves an approximation of order $O(\Delta x^2)$ and thus, for small $\Delta x$, it is 
 	more accurate than $f'_F(x)$ and $f'_B(x)$. 
 	
 	\vspace*{0.4cm}
 	
-	Considering $f(t)$ such as the position $\bold{r}$ of a particle at the time $t$, this result can be used to evaluate the velocity of that 
+	Considering $f(t)$ as the position $\bold{r}$ of a particle at the time $t$, this result can be used to evaluate the velocity of that 
 	particle: 
 	\begin{equation*}
 		\bold{v}(t) \approx \frac{\bold{r}(t + \Delta t) - \bold{r}(t - \Delta t)}{2 \Delta t}
@@ -959,6 +959,7 @@
 \end{frame}
 
 
+\subsection{The Verlet Algorithm}
 \begin{frame}[label=MDS-verlet1]
 	\frametitle{Molecular Dynamics Simulations}
 	\framesubtitle{The Verlet integrator - I}
@@ -966,9 +967,9 @@
 	
 	Let the position of particle $i$ be $\bold{r}_i(t)$. To derive the Verlet algorithm, the position at times $t + \Delta t$ is expressed in terms of 
 	its position, velocity and acceleration at time $t$ according to:
-	\begin{equation*}
+	\begin{equation}\label{eq:taylor-verlet}
 		\bold{r}_i(t + \Delta t) = \bold{r}_i(t) + \dot{\bold{r}}_i(t) \, \Delta t + \frac{\ddot{\bold{r}}_i(t)}{2} \, \Delta t^2 + \frac{\dddot{\bold{r}}_i(t)}{3!} \, \Delta t^3 + O(\Delta t^4)
-	\end{equation*}
+	\end{equation}
 	
 	A velocity-independent scheme can be obtained by writing a similar expansion for $\bold{r}_i(t + \Delta t)$:
 	\begin{equation*}
@@ -987,17 +988,147 @@
 	\justifying
 	
 	Using the Newton's second law, $\ddot{\bold{r}}_i(t) = \bold{F}_i(t) / m_i$, yields:
-	\begin{equation*}
+	\begin{equation}\label{eq:verlet-exp}
 		\bold{r}_i(t + \Delta t) = 2 \, \bold{r}_i(t) -  \bold{r}_i(t - \Delta t) + \frac{\bold{F}_i(t)}{2 \, m_i} \, \Delta t^2 + O(\Delta t^4)
-	\end{equation*}
+	\end{equation}
 	
 	Dropping the 	all terms of the order $O(\Delta t^4)$, one obtains the numerical integrator known as the \textbf{Verlet algorithm}:
-	\begin{equation*}
+	\begin{equation}\label{eq:verlet}
 		\bold{r}^{verl}_i(t + \Delta t) = 2 \, \bold{r}_i(t) -  \bold{r}_i(t - \Delta t) + \frac{\bold{F}_i(t)}{2 \, m_i} \, \Delta t^2
+	\end{equation}
+	
+	This algorithm offers the virtues of \textbf{simplicity and good stability for considerately large time steps}. However it treated velocities as 
+	less important than positions - a view in conflict with the attitude that the phase space trajectory depends equally on them. 
+	Modern formulations of the method often overcome this asymmetric view.
+\end{frame}
+
+\begin{frame}[label=MDS-verlet3]
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{The Verlet integrator - III}
+	\justifying
+	Actually, the Verlet algorithm only generates positions. However, if needed, the velocities can be constructed from knowledge of the 
+	trajectory, using the central difference (see slide \ref{MDS-FDM3}):
+	\begin{equation*}
+		\bold{v}^{verl}_i(t) = \frac{\bold{r}_i(t + \Delta t) - \bold{r}_i(t - \Delta t)}{2 \Delta t}
 	\end{equation*}
 	
-	This algorithm is not only one of the simplest, but also usually one of the best.
+	\begin{block}{\small{The main drawback of the Verlet algorithm}}\justifying\small{
+		The positions at $t + \Delta t$ depend both on the positions at $t$ and $t - \Delta t$.
+		Thus \textbf{this algorithm is not applicable for the first step}, $t=0$, unless one generates approximate positions at time $-\Delta t$.
+		Another possibility is to use, only for the first step, the Taylor expansion ignoring the terms of the order $O(\Delta t^3)$. 
+		Indeed, given a set of initial coordinates $\bold{r}_1(0), \dots , \bold{r}_N(0)$ and initial velocities $\bold{v}_1(0), \dots , \bold{v}_N(0)$, 
+		eq. \eqref{eq:taylor-verlet} can be used to obtain a set of coordinates, $\bold{r}_1(\Delta t), \dots , \bold{r}_N(\Delta t)$, after which it is 
+		possible to use the Verlet integrator, eq. \eqref{eq:verlet}, to generate a trajectory of arbitrary length.
+	}
+	\end{block}
 \end{frame}
+
+
+\subsection{The Leap Frog method}
+\begin{frame}[label=MDS-leap1]
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{The Leap Frog integrator - I}
+	\justifying
+	
+	This algorithm evaluates the velocities at half-integer time steps and uses these velocities to compute the new positions. 
+	To derive the Leap Frog algorithm from the Verlet scheme, one starts by defining the velocities at half-integer time steps as 
+	follows\footnotemark[1]:
+	
+	\vspace*{-0.1cm}
+
+	\begin{columns}
+		\begin{column}{\paperwidth}
+			\begin{equation*}
+				\bold{v}_i(t - \Delta t/2) \approx \frac{\bold{r}_i(t) - \bold{r}_i(t - \Delta t)}{\Delta t}
+				\;\,\; ; \;\,\;
+				\bold{v}_i(t + \Delta t/2) \approx \frac{\bold{r}_i(t + \Delta t) - \bold{r}_i(t)}{\Delta t}
+			\end{equation*}		
+		\end{column}	
+	\end{columns}	
+	
+	\vspace*{0.35cm}
+	
+	From the second equation it is possible to obtain an expression for the new positions, based on the old positions and velocities\footnotemark[2]:
+	\begin{equation*}
+		\bold{r}_i(t + \Delta t) = \bold{r}_i(t) + \bold{v}_i(t + \Delta t/2) \, \Delta t + O(\Delta t^3)
+	\end{equation*}	
+	
+	\footnotetext[1]{\justifying Note that these are central differences, just like \eqref{eq:central-dif}. Indeed, making the substitution 
+	$s=t-\Delta t/2$, one has: $\bold{v}_i(s) \approx [\bold{r}_i(s + \Delta t/2) - \bold{r}_i(s - \Delta t/2)] /\Delta t$}
+	\footnotetext[2]{\justifying The order of the approximation has been introduced considering the eq. \eqref{eq:central-dif}.}
+\end{frame}
+
+
+\begin{frame}[label=MDS-leap2]
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{The Leap Frog integrator - II}
+	\justifying
+	
+	From the expansion that determinates the Verlet algorithm (eq. \ref{eq:verlet-exp}), one gets the following expression for the update of the 
+	velocities:
+	
+	\vspace*{-0.15cm}
+	
+	\begin{equation*}
+		\bold{v}_i(t + \Delta t/2) = \bold{v}_i(t - \Delta t/2) + \frac{\bold{F}_i(t)}{2 \, m_i} \, \Delta t + O(\Delta t^3)
+	\end{equation*}	
+	
+	Hence, the \textbf{Leap Frog integrator} is:
+
+	\vspace*{-0.3cm}
+	
+	\begin{equation*}
+		%\text{Leap Frog}\;
+		\left\{\;
+		\begin{aligned}
+			&\bold{v}^{LP}_i(t +\Delta t/2) = \bold{v}_i(t - \Delta t/2) + \frac{\bold{F}_i(t)}{2 \, m_i} \, \Delta t\\
+			&\bold{r}^{LP}_i(t + \Delta t) = \bold{r}_i(t) + \bold{v}_i(t + \Delta t/2) \, \Delta t
+		\end{aligned}
+		\;\right\}
+	\end{equation*}
+	
+	\vspace*{0.15cm}
+	
+	As this algorithm is derived from the Verlet algorithm, it gives rise to identical trajectories. Note, however, that 
+	\underline{the\textcolor{white}{y}velocities are} \underline{not defined at the same time as the positions}. Thus, kinetic and potential energy are also not defined at the same time, and 
+	hence one cannot directly compute the total energy in the Leap Frog scheme.
+\end{frame}
+
+
+\subsection{The velocity Verlet algorithm}
+\begin{frame}[label=MDS-velVerl1]
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{The velocity Verlet integrator - I}
+	\justifying
+	
+	This algorithm evaluates the velocities at half-integer time steps and uses these velocities to compute the new positions. 
+	To derive the Leap Frog algorithm from the Verlet scheme, one starts by defining the velocities at half-integer time steps as 
+	follows\footnotemark[1]:
+	
+	\vspace*{-0.1cm}
+
+	\begin{columns}
+		\begin{column}{\paperwidth}
+			\begin{equation*}
+				\bold{v}_i(t - \Delta t/2) \approx \frac{\bold{r}_i(t) - \bold{r}_i(t - \Delta t)}{\Delta t}
+				\;\,\; ; \;\,\;
+				\bold{v}_i(t + \Delta t/2) \approx \frac{\bold{r}_i(t + \Delta t) - \bold{r}_i(t)}{\Delta t}
+			\end{equation*}		
+		\end{column}	
+	\end{columns}	
+	
+	\vspace*{0.35cm}
+	
+	From the second equation it is possible to obtain an expression for the new positions, based on the old positions and velocities\footnotemark[2]:
+	\begin{equation*}
+		\bold{r}_i(t + \Delta t) = \bold{r}_i(t) + \bold{v}_i(t + \Delta t/2) \, \Delta t + O(\Delta t^3)
+	\end{equation*}	
+	
+	\footnotetext[1]{\justifying Note that these are central differences, just like \eqref{eq:central-dif}. Indeed, making the substitution 
+	$s=t-\Delta t/2$, one has: $\bold{v}_i(s) \approx [\bold{r}_i(s + \Delta t/2) - \bold{r}_i(s - \Delta t/2)] /\Delta t$}
+	\footnotetext[2]{\justifying The order of the approximation has been introduced considering the eq. \eqref{eq:central-dif}.}
+\end{frame}
+
 
 \begin{frame}
 	\frametitle{Molecular Dynamics Simulations}
