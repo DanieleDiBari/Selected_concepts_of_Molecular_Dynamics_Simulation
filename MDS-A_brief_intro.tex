@@ -564,7 +564,7 @@
 \subsection{Metropolis method}
 \begin{frame}[label=MCS-Metropolis1]
 	\frametitle{Monte Carlo simulations}
-	\framesubtitle{A summary of the Monte Carlo simulations: Metropolis method - I}
+	\framesubtitle{A summary of Monte Carlo simulations: Metropolis method - I}
 	\justifying	
 	
 	\vspace*{0.2cm}
@@ -578,9 +578,9 @@
 			\begin{enumerate}\justifying
 				\item	\textbf{Starting from a configuration} $m$. If this is the 1st step, initializing the positions and computing the 
 				potential energy.
-				\item \textbf{Generating a trial configuration} $n\,$ by selecting a particle $i\,$ at random and giving it a small, random
-						displacement, $\bold{r}^n_i \rightarrow \bold{r}^n_i + \Delta\bold{r}$, where $\Delta\bold{r}$ is chosen uniformly 
-						within prescribed limits.
+				\item 	\textbf{Generating a trial configuration} $n\,$ by selecting a particle $i\,$ at random and giving it a small, random
+							displacement, $\bold{r}^m_i \rightarrow \bold{r}^n_i = \bold{r}^m_i + \Delta\bold{r}$, where $\Delta\bold{r}$ is 
+							chosen uniformly within prescribed limits.
 			\end{enumerate}
 		\end{column}
 		
@@ -612,13 +612,13 @@
 
 \begin{frame}[label=MCS-Metropolis2]
 	\frametitle{Monte Carlo simulations}
-	\framesubtitle{A summary of the Monte Carlo simulations: Metropolis method - II}
+	\framesubtitle{A summary of Monte Carlo simulations: Metropolis method - II}
 	\justifying
 	
 	\begin{enumerate}\justifying
 		\item[3.] \textbf{Verifying} whether \textbf{the trial configuration} must be rejected:
 					\begin{itemize}\justifying
-						\item \bluetextbf{yes:} count the old configuration $n$ as the new configuration $m$ and repeat the process from 
+						\item \bluetextbf{yes:} count the old configuration $m$ as the new configuration $n$ and repeat the process from 
 								step 1
 						\item \bluetextbf{not:} compute the new potential energy $U_n$ and accept the proposed configuration with the 
 								following:
@@ -631,8 +631,8 @@
 									\end{cases}	
 								\end{equation*} 
 					\end{itemize}
-		\item[4.] \textbf{Evaluating property integrands}, such as $A(\bold{r}^N)$ in \eqref{eq:can_ens:avg_val}, and accumulating them in 
-					running sums
+		\item[4.] 	\textbf{Evaluating property integrands}, such as $A(\bold{r}^N)$ in eq. \eqref{eq:can_ens:avg_val}, and accumulating 
+						them in running sums
 		\item[5.] \textbf{Iterate the entire process} until at least a few million of configurations have been made to obtain an adequate 
 					statistical error in the average values
 	\end{enumerate}
@@ -1140,7 +1140,7 @@
 	\framesubtitle{The velocity Verlet integrator - II}
 	\justifying
 	
-	Thus, the steps \textbf{velocity Verlet algorithm} is:
+	Thus, the steps of the \textbf{velocity Verlet algorithm} are:
 	
 	\vspace*{0.1cm}
 	
@@ -1420,26 +1420,49 @@
 \begin{frame}[label=MDS-trotterFact5]
 	\frametitle{Molecular Dynamics Simulations}
 	\framesubtitle{Example of the Trotter factorization scheme - V}
-	\justifying
+	\justifying\small{	
 	
 	This procedure can also be rewritten very similar to a pseudocode:\footnotemark[1]
-	\small{	
-	\begin{align*}
-		&p[i] = p[i] + 0.5 \cdot \Delta t \cdot F[i]\\
-		&r[i] = r[i] + \Delta t \cdot p / m[i]\\
-		&\text{\textit{Recalculate the force}}\\
-		&p[i] = p[i] + 0.5 \cdot \Delta t \cdot F[i]
-	\end{align*}
-	}
-	Note that \textbf{these are just the steps required by the operator factorization scheme of \eqref{eq:trotter}}. 
-	The first operator that acts on the phase space produces the momentum translation; 
-	the next operator takes the output of the preceding step and performs the position translation; 
-	since this step changes the positions, the force must be recalculated; 
-	the last operator produces the final momentum translation using the new force. 
 	
+	\vspace*{-0.5cm}
+	
+	\begin{align*}
+		1.& \;\, p[i] = p[i] + 0.5 \cdot \Delta t \cdot F[i]\\
+		2.& \;\, r[i] = r[i] + \Delta t \cdot p / m[i]\\
+		3.& \;\, \text{\textit{Recalculate the force}}\\
+		4.& \;\, p[i] = p[i] + 0.5 \cdot \Delta t \cdot F[i]
+	\end{align*}
+	
+	Note that \textbf{these are just the steps required by the operator factorization scheme of \eqref{eq:trotter}}. 
+	The \underline{first operator} $\exp \left[ (\Delta t/2)  \bold{F}_i \,(\partial/\partial \bold{p}_i) \right]$, acting on the phase space, produces 
+	the momentum translation\textbf{;} 
+	the \underline{second operator} $ \exp \left[ \Delta t \, (\bold{p}_i / m_i) \, \partial/\partial \bold{r}_i \right] $ takes the output of the 
+	preceding step and performs the position translation\textbf{;}	
+	since this step changes the positions, the \underline{force\textcolor{white}{y}must be recalculated}\textbf{;}
+	the \underline{last operator} $\,\exp \left[ (\Delta t/2)  \bold{F}_i \,(\partial/\partial \bold{p}_i) \right]$ produces the final momentum 
+	translation using the new force.
+%	\begin{itemize}
+%		\item[$\triangleright$]	\justifying
+%					The first operator $\exp \left[ (\Delta t/2)  \bold{F}_i \,(\partial/\partial \bold{p}_i) \right]$, acting on the phase space, produces 
+%					the momentum translation
+%		\item[$\triangleright$]	
+%					The next operator $ \exp \left[ \Delta t \, (\bold{p}_i / m_i) \, \partial/\partial \bold{r}_i \right] $ takes the output of the preceding 
+%					step and performs the position translation
+%		\item[$\triangleright$]	
+%					Since this step changes the positions, the force must be recalculated
+%		\item[$\triangleright$]	
+%					The last operator $\exp \left[ (\Delta t/2)  \bold{F}_i \,(\partial/\partial \bold{p}_i) \right]$ produces the final momentum 
+%					translation using the new force
+%	\end{itemize}
+
 	\footnotetext[1]{The third line involves a call to some function or subroutine that updates the force from the new positions generated in 
 	the second line.}
 
+%$\exp \left[ (\Delta t/2)  \bold{F}_i \,(\partial/\partial \bold{p}_i) \right]$
+%$ \exp \left[ \Delta t \, (\bold{p}_i / m_i) \, \partial/\partial \bold{r}_i \right] $
+				
+%$\exp(\mathcal{L}_1 \Delta t)$ and $\exp(\mathcal{L}_2 \Delta t / 2)$
+}
 \end{frame}
 
 
@@ -1466,29 +1489,29 @@
 \end{frame}
 
 
-\begin{frame}
-	\frametitle{Molecular Dynamics Simulations}
-	\framesubtitle{Finite difference method - Errors}
-	\justifying
-	
-	The numerical integrator employed in MD simulation generates the trajectory of the system in the phase space, allowing in this way to 
-	measure the properties of interest deriving from that trajectory.
-	
-	However, in generating trajectories, uncertainties arise from the finite-difference method used (truncation error) and from the way it is 
-	implemented (round-off error). Therefore, it is important to study not merely the FDM per se, rather the broader problem of how those 
-	methods can affect the reliability of simulation results.
-	
-	The terms truncation and round-off refer to sources of errors; however, it should be considered not only what causes errors but also how 
-	errors propagate - whether they grow as the simulations proceeds. This is the issue of algorithmic stability.
-\end{frame}
+%\begin{frame}
+%	\frametitle{Molecular Dynamics Simulations}
+%	\framesubtitle{Finite difference method - Errors}
+%	\justifying
+%	
+%	The numerical integrator employed in MD simulation generates the trajectory of the system in the phase space, allowing in this way to 
+%	measure the properties of interest deriving from that trajectory.
+%	
+%	However, in generating trajectories, uncertainties arise from the finite-difference method used (truncation error) and from the way it is 
+%	implemented (round-off error). Therefore, it is important to study not merely the FDM per se, rather the broader problem of how those 
+%	methods can affect the reliability of simulation results.
+%	
+%	The terms truncation and round-off refer to sources of errors; however, it should be considered not only what causes errors but also 
+%	how errors propagate - whether they grow as the simulations proceeds. This is the issue of algorithmic stability.
+%\end{frame}
 
-\begin{frame}
-	\frametitle{Molecular Dynamics Simulations}
-	\framesubtitle{Finite difference method - Errors}
-	\justifying
+%\begin{frame}
+%	\frametitle{Molecular Dynamics Simulations}
+%	\framesubtitle{Finite difference method - Errors}
+%	\justifying
 	
-	Molecular dynamics involves nonlinear ordinary differential equations, so analytical stability analysis cannot be used. Instead, it may do an approximate analysis by linearizing the differential equations or it may attack the stability problem using the method of Lyapunov. Both strategies are cumbersome when applied to the equations of motion used in molecular dynamics, thus what it is usually done for simple simulations is a numerical analysis using trial values for the time step. That is, through a series of short test runs, it is possible to identify the critical step $\Delta t$ at which the algorithm becomes unstable and then choose a smaller operational value that establishes conservation of energy. 
-\end{frame}
+%	Molecular dynamics involves nonlinear ordinary differential equations, so analytical stability analysis cannot be used. Instead, it may do an approximate analysis by linearizing the differential equations or it may attack the stability problem using the method of Lyapunov. Both strategies are cumbersome when applied to the equations of motion used in molecular dynamics, thus what it is usually done for simple simulations is a numerical analysis using trial values for the time step. That is, through a series of short test runs, it is possible to identify the critical step $\Delta t$ at which the algorithm becomes unstable and then choose a smaller operational value that establishes conservation of energy. 
+%\end{frame}
 
 %\begin{frame}
 %	\frametitle{Introduction}
@@ -1510,28 +1533,28 @@
 	\bibitem{books:Allen}
 	Allen, M., \& Tildesley, D. (1987). \textit{Computer Simulation of Liquids}. Oxford, England, Clarendon Press.
 
+	\bibitem{site:Cheung}
+	Cheung, D. L. (2002). \textit{Structures and Properties of Liquid Crystals and Related Molecules from Computer Simulation} 
+	 (Ph.D. Thesis).\\Retrieved from: \url{http://cmt.dur.ac.uk/sjc/thesis_dlc/}
+	  
 	\bibitem{books:Frenkel}
 	Frenkel, D., \& Smit, B. (2012). \textit{Understanding molecular simulation: from algorithms to applications}. 
 	San Diego, Calif.: Academic Press.	
-	
+	 
 	\bibitem{books:Haile}
 	Haile, J. M. (1992). \textit{Molecular dynamics simulation: elementary methods}. New York u.a.: Wiley.
 	
 	\bibitem{books:Hansen}
 	Hansen, J. P., \& McDonald, I. R. (2014). \textit{Theory of simple liquids: with applications to soft matter}. Amsterdam: Elsevier. 
 	
+	\bibitem{site:Lynch}
+	 Lynch, P. (2005–2006). \textit{Numerical Weather Prediction}. Lecture presented at Course of Meteorology \& Climate Centre in 
+	 University College Dublin. \\Retrieved from: \url{http://www.atmos.umd.edu/~ekalnay/syllabi/AOSC614/NWP-CH03-1-2.pdf} 
+	
 	\bibitem{books:Tuckerman}
 	Tuckerman, M. E. (2010). \textit{Statistical Mechanics: Theory and Molecular Simulation}. New York, United States: 
 	Oxford University Press. 
-	
-	
-	\bibitem{site:Cheung}
-	Cheung, D. L. (2002). \textit{Structures and Properties of Liquid Crystals and Related Molecules from Computer Simulation} 
-	 (Ph.D. Thesis).\\Retrieved from: \url{http://cmt.dur.ac.uk/sjc/thesis_dlc/}
-	 
-	 \justifying
-	 \bibitem{}
-	 Lynch, P. (2005–2006). \textit{Numerical Weather Prediction}. Lecture presented at Course of Meteorology \& Climate Centre in University College Dublin. \\Retrieved from: \url{http://www.atmos.umd.edu/~ekalnay/syllabi/AOSC614/NWP-CH03-1-2.pdf} 
+
 	 }
 	
 	\end{thebibliography}
