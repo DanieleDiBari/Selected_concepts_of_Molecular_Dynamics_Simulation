@@ -705,13 +705,13 @@
 	\framesubtitle{Connection between microcanonical ensemble and Hamiltonian mechanics}
 	\justifying
 	
-	The microcanonical ensemble consists of all microscopic states $ ( \bold{q}^N, \bold{p}^N )$ on the constant energy hypersurface 
-	$H ( \bold{q}^N, \bold{p}^N ) = E$. 
+	The microcanonical ensemble consists of all microscopic states $ ( \bold{r}^N, \bold{p}^N )$ on the constant energy hypersurface 
+	$H ( \bold{r}^N, \bold{p}^N ) = E$. 
 	
 	\vspace*{0.15cm}
 	
 	In classical Hamiltonian mechanics the equations of motion conserve the total energy: 
-	$dH/dt = 0 \Rightarrow H ( \bold{q}^N, \bold{p}^N ) = const$.
+	$dH/dt = 0 \Rightarrow H ( \bold{r}^N, \bold{p}^N ) = const$.
 	
 	\vspace*{0.15cm}
 	
@@ -720,9 +720,9 @@
 	\vspace*{0.15cm}
 	
 	Indeed, for a system that evolves according to Hamilton's equations of motion:
-	\begin{equation*}
-		\dot{\bold{q}}_i = \frac{\partial H}{\partial \bold{p}_i} \quad \quad \dot{\bold{p}}_i = - \frac{\partial H}{\partial \bold{q}_i}
-	\end{equation*}
+	\begin{equation}\label{eq:hamilton}
+		\dot{\bold{r}}_i = \frac{\partial H}{\partial \bold{p}_i} \quad \quad \dot{\bold{p}}_i = - \frac{\partial H}{\partial \bold{r}_i}
+	\end{equation}
 	
 	a trajectory computed with these equations will generate microscopic configurations belonging to the microcanonical ensemble with 
 	the constant energy $E$.
@@ -838,14 +838,15 @@
 	Indeed there are some points to consider.
 	
 	\begin{itemize}\justifying
-		\item	\bluetextbf{Speed is not very relevant} because, usually, the fraction of time spent on integrating the equations of motion is small 
-				compared to computing the interactions.
+		\item	\bluetextbf{Speed is not very relevant} because, usually, the fraction of time spent on integrating the equations of motion is
+					small compared to computing the interactions.
 		
 		\item	\bluetextbf{Accuracy for large $\Delta t$ is more important}: the bigger is the $\Delta t$ used, the fewer are evaluations of the 
-				forces needed. Hence, it is useful to employ a sophisticated algorithm that allows the use of a long $\Delta t$.\footnotemark[1]
+					forces needed. Hence, it is useful to employ a sophisticated algorithm that allows the use of a long $\Delta t$.\footnotemark[1]
 	\end{itemize}
 	
-	\footnotetext[1]{\justifying Actually some algorithms allow the use of large $\Delta t$, storing information on increasingly higher-order derivatives of the particle coordinates. They require more memory storage, but typically this is not a serious drawback.}
+	\footnotetext[1]{\justifying Actually some algorithms allow the use of large $\Delta t$, storing information on increasingly higher-order 
+	derivatives of the particle coordinates. They require more memory storage, but typically this is not a serious drawback.}
 	
 \end{frame}
 
@@ -856,14 +857,15 @@
 	
 	\begin{itemize}\justifying
 		\item	\bluetextbf{Energy conservation is an important criterion.}
-				The sophisticated higher-order algorithms tend to have very good energy conservation for short times 
-				(i.e., during a few $\Delta t$).
-				Nevertheless, they often have the undesirable feature that the overall energy drifts for long times. In contrast, simpler algorithms 
-				tend to have only moderate short-term energy conservation but little long-term drift.
+					The sophisticated higher-order algorithms tend to have very good energy conservation for short times 
+					(i.e., during a few $\Delta t$).
+					Nevertheless, they often have the undesirable feature that the overall energy drifts for long times. In contrast, simpler 
+					algorithms tend to have only moderate short-term energy conservation but little long-term drift.
 		
-		\item	\bluetextbf{Time reversibility:} Since the equations of motion are time reversible, so should be the numerical integrator employed. 
-				In fact, many algorithms are not time reversible - future and past phase space coordinates do not play a symmetric 
-				role.\footnotemark[1]
+		\item	\bluetextbf{Time reversibility:} Since the equations of motion are time reversible, so should be the numerical integrator 
+					employed. 
+					In fact, many algorithms are not time reversible - future and past phase space coordinates do not play a symmetric 
+					role.\footnotemark[1]
 	\end{itemize}
 	
 	\footnotetext[1]{\justifying For instance the predictor-corrector schemes and many of the schemes used to deal with constraints.}
@@ -946,8 +948,8 @@
 		f'(x) = \frac{f(x + \Delta x) - f(x - \Delta x)}{2 \Delta x} + O(\Delta x^2) = f'_C(x) + O(\Delta x^2)
 	\end{equation}
 	
-	where  $f'_C(x)$ is the \textbf{central difference} that involves an approximation of order $O(\Delta x^2)$ and thus, for small $\Delta x$, it is 
-	more accurate than $f'_F(x)$ and $f'_B(x)$. 
+	where  $f'_C(x)$ is the \textbf{central difference} that involves an approximation of order $O(\Delta x^2)$ and thus, for small $\Delta x$, 
+	it is more accurate than $f'_F(x)$ and $f'_B(x)$. 
 	
 	\vspace*{0.4cm}
 	
@@ -959,14 +961,14 @@
 \end{frame}
 
 
-\subsection{The Verlet Algorithm}
+\subsubsection{The Verlet Algorithm}
 \begin{frame}[label=MDS-verlet1]
 	\frametitle{Molecular Dynamics Simulations}
 	\framesubtitle{The Verlet integrator - I}
 	\justifying
 	
-	Let the position of particle $i$ be $\bold{r}_i(t)$. To derive the Verlet algorithm, the position at times $t + \Delta t$ is expressed in terms of 
-	its position, velocity and acceleration at time $t$ according to:
+	Let the position of particle $i$ be $\bold{r}_i(t)$. To derive the Verlet algorithm, the position at times $t + \Delta t$ is expressed in terms 
+	of its position, velocity and acceleration at time $t$ according to:
 	\begin{equation}\label{eq:taylor-verlet}
 		\bold{r}_i(t + \Delta t) = \bold{r}_i(t) + \dot{\bold{r}}_i(t) \, \Delta t + \frac{\ddot{\bold{r}}_i(t)}{2} \, \Delta t^2 + \frac{\dddot{\bold{r}}_i(t)}{3!} \, \Delta t^3 + O(\Delta t^4)
 	\end{equation}
@@ -987,19 +989,33 @@
 	\framesubtitle{The Verlet integrator - II}
 	\justifying
 	
-	Using the Newton's second law, $\ddot{\bold{r}}_i(t) = \bold{F}_i(t) / m_i$, yields:
+	\vspace*{-0.15cm}
+	
+	Using the Newton's second law, $\ddot{\bold{r}}_i(t) = \bold{F}_i(t) / m_i$, yields:\footnotemark[1]
+	
+	\vspace*{-0.45cm}
+	
 	\begin{equation}\label{eq:verlet-exp}
 		\bold{r}_i(t + \Delta t) = 2 \, \bold{r}_i(t) -  \bold{r}_i(t - \Delta t) + \frac{\bold{F}_i(t)}{2 \, m_i} \, \Delta t^2 + O(\Delta t^4)
 	\end{equation}
 	
+	\vspace*{-0.1cm}
+	
 	Dropping the 	all terms of the order $O(\Delta t^4)$, one obtains the numerical integrator known as the \textbf{Verlet algorithm}:
+
+	\vspace*{-0.17cm}	
+	
 	\begin{equation}\label{eq:verlet}
 		\bold{r}^{verl}_i(t + \Delta t) = 2 \, \bold{r}_i(t) -  \bold{r}_i(t - \Delta t) + \frac{\bold{F}_i(t)}{2 \, m_i} \, \Delta t^2
 	\end{equation}
 	
-	This algorithm offers the virtues of \textbf{simplicity and good stability for considerately large time steps}. However it treated velocities as 
-	less important than positions - a view in conflict with the attitude that the phase space trajectory depends equally on them. 
+	\vspace*{-0.05cm}
+	
+	This algorithm offers the virtues of \textbf{simplicity and good stability for considerately large time steps}. However it treated velocities 
+	as less important than positions - a view in conflict with the attitude that the phase space trajectory depends equally on them. 
 	Modern formulations of the method often overcome this asymmetric view.
+	
+	\footnotetext[1]{Note: $\bold{F}_i(t)$ is used as shorthand notation of $\bold{F}_i(\bold{r}_1(t), \dots , \bold{r}_N(t)) $}
 \end{frame}
 
 \begin{frame}[label=MDS-verlet3]
@@ -1017,14 +1033,14 @@
 		Thus \textbf{this algorithm is not applicable for the first step}, $t=0$, unless one generates approximate positions at time $-\Delta t$.
 		Another possibility is to use, only for the first step, the Taylor expansion ignoring the terms of the order $O(\Delta t^3)$. 
 		Indeed, given a set of initial coordinates $\bold{r}_1(0), \dots , \bold{r}_N(0)$ and initial velocities $\bold{v}_1(0), \dots , \bold{v}_N(0)$, 
-		eq. \eqref{eq:taylor-verlet} can be used to obtain a set of coordinates, $\bold{r}_1(\Delta t), \dots , \bold{r}_N(\Delta t)$, after which it is 
-		possible to use the Verlet integrator, eq. \eqref{eq:verlet}, to generate a trajectory of arbitrary length.
+		eq. \eqref{eq:taylor-verlet} can be used to obtain a set of coordinates, $\bold{r}_1(\Delta t), \dots , \bold{r}_N(\Delta t)$, after which it 
+		is 	possible to use the Verlet integrator, eq. \eqref{eq:verlet}, to generate a trajectory of arbitrary length.
 	}
 	\end{block}
 \end{frame}
 
 
-\subsection{The Leap Frog method}
+\subsubsection{The Leap Frog method}
 \begin{frame}[label=MDS-leap1]
 	\frametitle{Molecular Dynamics Simulations}
 	\framesubtitle{The Leap Frog integrator - I}
@@ -1048,7 +1064,8 @@
 	
 	\vspace*{0.35cm}
 	
-	From the second equation it is possible to obtain an expression for the new positions, based on the old positions and velocities\footnotemark[2]:
+	From the second equation it is possible to obtain an expression for the new positions, based on the old positions and 
+	velocities\footnotemark[2]:
 	\begin{equation*}
 		\bold{r}_i(t + \Delta t) = \bold{r}_i(t) + \bold{v}_i(t + \Delta t/2) \, \Delta t + O(\Delta t^3)
 	\end{equation*}	
@@ -1064,8 +1081,8 @@
 	\framesubtitle{The Leap Frog integrator - II}
 	\justifying
 	
-	From the expansion that determinates the Verlet algorithm (eq. \ref{eq:verlet-exp}), one gets the following expression for the update of the 
-	velocities:
+	From the expansion that determinates the Verlet algorithm (eq. \ref{eq:verlet-exp}), one gets the following expression for the update of 
+	the velocities:
 	
 	\vspace*{-0.15cm}
 	
@@ -1090,43 +1107,380 @@
 	\vspace*{0.15cm}
 	
 	As this algorithm is derived from the Verlet algorithm, it gives rise to identical trajectories. Note, however, that 
-	\underline{the\textcolor{white}{y}velocities are} \underline{not defined at the same time as the positions}. Thus, kinetic and potential energy are also not defined at the same time, and 
-	hence one cannot directly compute the total energy in the Leap Frog scheme.
+	\underline{the\textcolor{white}{y}velocities are} \underline{not defined at the same time as the positions}. Thus, kinetic and potential 
+	energy are also not defined at the same time, and hence one cannot directly compute the total energy in the Leap Frog scheme.
 \end{frame}
 
 
-\subsection{The velocity Verlet algorithm}
+\subsubsection{The velocity Verlet algorithm}
 \begin{frame}[label=MDS-velVerl1]
 	\frametitle{Molecular Dynamics Simulations}
 	\framesubtitle{The velocity Verlet integrator - I}
 	\justifying
 	
-	This algorithm evaluates the velocities at half-integer time steps and uses these velocities to compute the new positions. 
-	To derive the Leap Frog algorithm from the Verlet scheme, one starts by defining the velocities at half-integer time steps as 
-	follows\footnotemark[1]:
+	This integrator uses positions and velocities computed at equal times. To deduce this algorithm one can starts from the Taylor 
+	expansions, forwards in time, of the coordinates around $\bold{r}_i(t)$:
+	\begin{equation}\label{eq:posexp-velverlet}
+		\bold{r}_i(t + \Delta t) = \bold{r}_i(t) + \bold{v}_i(t) \, \Delta t + \frac{\bold{F}_i(t)}{2 \, m_i} \, \Delta t^2 + O(\Delta t^3)
+	\end{equation}
+	Then, expanding them backwards in time around $\bold{r}_i(t + \Delta t)$, yields:
+	\begin{equation*}
+		\bold{r}_i(t) = \bold{r}_i(t + \Delta t) - \bold{v}_i(t + \Delta t) \, \Delta t + \frac{\bold{F}_i(t + \Delta t)}{2 \, m_i} \, \Delta t^2 + O(\Delta t^3)
+	\end{equation*}
+	Combining the two equations it is possible to obtain:
+	\begin{equation}\label{eq:velexp-verlet}
+		\bold{v}_i(t + \Delta t) = \bold{v}_i(t) + \frac{\Delta t}{2 \, m_i} \, [\bold{F}_i(t) + \bold{F}_i(t + \Delta t)] + O(\Delta t^2)
+	\end{equation}
 	
-	\vspace*{-0.1cm}
+	This expression, together with the Taylor expansion of the coordinates, allows to evolves simultaneously both positions and velocities.
+\end{frame}
 
+\begin{frame}[label=MDS-velVerl2]
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{The velocity Verlet integrator - II}
+	\justifying
+	
+	Thus, the steps \textbf{velocity Verlet algorithm} is:
+	
+	\vspace*{0.1cm}
+	
+	\begin{enumerate}
+		\item	$\bold{r}^{vVerl}_i(t + \Delta t) = \bold{r}_i(t) + \bold{v}_i(t) \, \Delta t + \frac{\bold{F}_i(t)}{2 \, m_i} \, \Delta t^2$
+		\vspace*{0.1cm}		
+		\item	\textit{Compute the forces at time $(t + \Delta t)$ from the positions}
+		\vspace*{0.1cm}
+		\item	$\bold{v}^{vVerl}_i(t + \Delta t) = \bold{v}_i(t) + \frac{\Delta t}{2 \, m_i} \, [\bold{F}_i(t) + \bold{F}_i(t + \Delta t)]$
+	\end{enumerate}
+
+	\vspace*{0.25cm}
+
+	First it evolves positions, then evaluate the forces at the new position, then evolves the velocities. The iteration of this cycles generates 
+	the complete trajectory in phase-space.
+\end{frame}
+
+
+\subsection{The classical time evolution operator}
+\begin{frame}[label=MDS-evOperator]
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{The classical time evolution operator}
+	\justifying
+	
+	We have discussed numerical integration in a simplistic way, relying on Taylor series expansions to generate update procedures. 
+	However, because there are formal properties of Hamiltonian systems that should be preserved by numerical integration methods, 
+	\textit{it is important to develop a formal structure that allows numerical solvers to be generated more rigorously}. 
+	The framework we seek is based on \textbf{the classical time evolution operator approach}.
+	
+	\vspace*{0.3cm}
+	
+	We begin by considering the time evolution of any function $a(x)$ of the phase space vector. If $a(x)$ is evaluated along a trajectory 
+	$x_t$, then in generalized coordinates, the time derivative of $a(x_t)$ is:
+	
+	\vspace*{-0.15cm}
+
+	\begin{equation*}
+		\frac{da}{dt} = \sum^N_{i = 1} \left[ \frac{\partial a}{\partial \bold{r}_i} \, \dot{\bold{r}}_i + \frac{\partial a}{\partial \bold{p}_i} \, \dot{\bold{p}}_i \right]
+	\end{equation*}
+
+\end{frame}
+
+\begin{frame}[label=MDS-evOperator]
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{The classical time evolution operator}
+	\justifying
+	
+	\vspace*{-0.15cm}
+		
+	Inserting the classical law of evolution provided by the Hamilton equations \eqref{eq:hamilton} one obtains:
+	
+	\vspace*{-0.15cm}
+
+	\begin{equation*}
+		\frac{da}{dt} = \sum^N_{i = 1} \left[ \frac{\partial a}{\partial \bold{r}_i} \, \frac{\partial H}{\partial \bold{p}_i} - \frac{\partial a}{\partial \bold{p}_i} \, \frac{\partial H}{\partial \bold{r}_i} \right] = - \{ H , a \}
+	\end{equation*}
+	
+	Thus, by defining the \textbf{Liouville operator} $\mathcal{L}$ as:
+	\begin{equation*}
+		\mathcal{L} =  i \{ H , \,\cdot\,  \} = i \sum^N_{i = 1} \left[ \frac{\partial H}{\partial \bold{r}_i} \, \frac{\partial}{\partial \bold{p}_i} - \frac{\partial H}{\partial \bold{p}_i} \, \frac{\partial}{\partial \bold{r}_i} \right]  \;\; \Longrightarrow \;\; - \{ H , a \} = i \mathcal{L} a
+	\end{equation*}
+	
+	we can write the symbolic evolution of $a$ as: $\frac{da}{dt} = i \mathcal{L} a$. 
+	
+	This can be solved formally for $a(x_t)$ as:
+	\begin{equation}\label{eq:exactev}
+		x_t = e^{i \mathcal{L} t} \, x_0
+	\end{equation}
+	
+	The last equation provides us with a \textbf{very useful starting point for developing approximate solutions} to Hamilton's equations.
+\end{frame}
+
+\begin{frame}[label=MDS-evOperator]
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{The classical time evolution operator}
+	\justifying
+	
+	The Liouville operator can be written as a sum of two contributions, $\mathcal{L} =  \mathcal{L}_1 + \mathcal{L}_2$, where:
+	\begin{equation}\label{eq:liouville}
+		\mathcal{L}_1 =  - i \sum^N_{i = 1} \frac{\partial H}{\partial \bold{p}_i} \, \frac{\partial}{\partial \bold{r}_i}
+		\quad\quad\text{and}\quad\quad
+		\mathcal{L}_2 =  i \sum^N_{i = 1} \frac{\partial H}{\partial \bold{r}_i} \, \frac{\partial}{\partial \bold{p}_i}
+	\end{equation}
+	
+	Unfortunately, $\mathcal{L}_1$ and $\mathcal{L}_2$ are two non-commuting operators and the order by which the two operators are 
+	applied is important \cite{books:Tuckerman}.
+	In particular, the classical propagator $\exp(i \mathcal{L} t) = \exp[(i \mathcal{L}_1 + i \mathcal{L}_2)t]$ cannot be separated into a 
+	simple product $\exp(i \mathcal{L}_1 t) \cdot \exp(i \mathcal{L}_2 t)$. This is unfortunate because in many instances, \textbf{the action 
+	of the individual operators $\exp(i \mathcal{L}_1t)$ and $\exp(i \mathcal{L}_2 t)$ on the phase space vector can be evaluated exactly}. 
+	Thus, it would be useful if the propagator could be expressed in terms of these two factors.
+	
+\end{frame}
+
+\begin{frame}[label=MDS-evOperator]
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{The symmetric Trotter theorem}
+	\justifying
+	
+	It states that for two operators $A$ and $B$ for which $[ A , B ] \neq 0$
+	\begin{equation*}
+		e^{A + B} = \lim_{P \rightarrow \infty} \left[ e^{B / 2 P} \, e^{A / P} \, e^{B / 2 P} \right]^P
+	\end{equation*}
+	where $P$ is an integer.
+	Applying the symmetric Trotter theorem to the classical propagator one obtains:
+	\begin{equation*}
+		e^{i \mathcal{L} t} = e^{i \mathcal{L}_1 t + i \mathcal{L}_2 t} = \lim_{\Delta t \rightarrow 0} \left[ e^{i \mathcal{L}_2 \, \frac{\Delta t}{2}} \, e^{i \mathcal{L}_1 \Delta t} \, e^{i \mathcal{L}_2 \, \frac{\Delta t}{2}} \right]^\frac{t}{\Delta t}
+	\end{equation*}
+	and using this expression for $t = \Delta t$ (with $\Delta t \ll 1$), yields:
+		\begin{equation}\label{eq:trotter}
+		e^{i \mathcal{L} t} = e^{i \mathcal{L}_1 t + i \mathcal{L}_2 t} \approx e^{i \mathcal{L}_2 \, \frac{\Delta t}{2}} \, e^{i \mathcal{L}_1 \Delta t} \, e^{i \mathcal{L}_2 \, \frac{\Delta t}{2}}
+	\end{equation}
+	
+	The utility of \eqref{eq:trotter} is that if the contributions $\mathcal{L}_1$ and $\mathcal{L}_2$ to the Liouville operator are chosen such 
+	the action of the operators $\exp(\mathcal{L}_1 \Delta t)$ and $\exp(\mathcal{L}_2 \Delta t / 2)$ can be evaluated analytically, then 
+	\textbf{\eqref{eq:trotter} can be used as a numerical propagation scheme for a single time step}.
+\end{frame}
+
+
+\begin{frame}[label=MDS-evOperator]
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{The symmetric Trotter theorem}
+	\justifying
+	
+	Before progressing, let's look how a generic exponential operator $e^{c \frac{\partial}{\partial y}}$, where $c$ is independent of $y$, 
+	acts on a function $g(y)$:
+	\begin{equation*}
+		e^{c \frac{\partial}{\partial y}} g(y) = \sum^\infty_{k = 0} \frac{1}{k!} \left( c \frac{\partial}{\partial y} \right)^k g(y)
+		= \sum^\infty_{k = 0} \frac{c^k}{k!} \frac{\partial^k g(y)}{\partial y^k} = g(y+c)
+	\end{equation*}	
+	where in the last step we have exploited the Taylor expansion of the function $g(y + c)$ around $y$. Note that, if $g(y)$ is a constant 
+	(e.g. is a function $h$ of $x$ which does not dependent on y) only the first term in the sum remains:
+	\begin{equation*}
+		e^{c \frac{\partial}{\partial y}} h(x) = \sum^\infty_{k = 0} \frac{c^k}{k!} \frac{\partial^k h(x)}{\partial y^k} = h(x)
+	\end{equation*}	
+\end{frame}
+
+
+\begin{frame}[label=MDS-evOperator]
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{The symmetric Trotter theorem}
+	\justifying
+	
+	We are now in a position to apply the Trotter factorisation scheme to the classical evolution of a system. 
+	
+	Choosing an Hamiltonian as:
+	\begin{equation*}
+		H = \sum^N_{i = 1} \frac{\bold{p}^2_i}{m_i} + U (\bold{r}_1 , \dots , \bold{r}_N)
+	\end{equation*}
+	with \eqref{eq:liouville}, yields:
+	\begin{equation*}
+		\mathcal{L}_1 =  - i \sum^N_{i = 1} \frac{\bold{p}_i}{m_i} \, \frac{\partial}{\partial \bold{r}_i}
+		\quad\quad\text{and}\quad\quad
+		\mathcal{L}_2 =  - i \sum^N_{i = 1} \bold{F}_i \, \frac{\partial}{\partial \bold{p}_i}
+	\end{equation*}
+\end{frame}
+
+
+
+
+
+\begin{frame}[label=MDS-evOperator]
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{The symmetric Trotter theorem}
+	\justifying
+	
+	\vspace*{-0.35cm}
+	
+	The exact evolution \eqref{eq:exactev} is now replaced by an approximation evolution  \eqref{eq:trotter}. 
+	Thus, starting from an initial condition $(\bold{r}_i(0) , \bold{p}_i(0))$, for the $i$-particle, its approximate evolution can be expressed 
+	as:\footnotemark[1]
+	
+	\centering
 	\begin{columns}
 		\begin{column}{\paperwidth}
 			\begin{equation*}
-				\bold{v}_i(t - \Delta t/2) \approx \frac{\bold{r}_i(t) - \bold{r}_i(t - \Delta t)}{\Delta t}
-				\;\,\; ; \;\,\;
-				\bold{v}_i(t + \Delta t/2) \approx \frac{\bold{r}_i(t + \Delta t) - \bold{r}_i(t)}{\Delta t}
+				\left(\begin{array}{c} \bold{r}_i(\Delta t) \\ \bold{p}_i(\Delta t) \\ \end{array}\right) = 
+				\exp \left[ \frac{\Delta t}{2}  \bold{F}_i \, \frac{\partial}{\partial \bold{p}_i} \right] \cdot
+				\exp \left[ \Delta t \, \frac{\bold{p}_i}{m_i} \, \frac{\partial}{\partial \bold{r}_i} \right] \cdot
+				\exp \left[ \frac{\Delta t}{2}  \bold{F}_i \, \frac{\partial}{\partial \bold{p}_i} \right]
+				\left(\begin{array}{c} \bold{r}_i \\ \bold{p}_i \\ \end{array}\right)
 			\end{equation*}		
 		\end{column}	
 	\end{columns}	
 	
-	\vspace*{0.35cm}
+	\vspace*{0.25cm}
 	
-	From the second equation it is possible to obtain an expression for the new positions, based on the old positions and velocities\footnotemark[2]:
-	\begin{equation*}
-		\bold{r}_i(t + \Delta t) = \bold{r}_i(t) + \bold{v}_i(t + \Delta t/2) \, \Delta t + O(\Delta t^3)
-	\end{equation*}	
+	$\Downarrow$
 	
-	\footnotetext[1]{\justifying Note that these are central differences, just like \eqref{eq:central-dif}. Indeed, making the substitution 
-	$s=t-\Delta t/2$, one has: $\bold{v}_i(s) \approx [\bold{r}_i(s + \Delta t/2) - \bold{r}_i(s - \Delta t/2)] /\Delta t$}
-	\footnotetext[2]{\justifying The order of the approximation has been introduced considering the eq. \eqref{eq:central-dif}.}
+	\vspace*{-0.3cm}
+	
+	\begin{columns}
+		\begin{column}{\paperwidth}
+			\begin{equation*}
+				\left(\begin{array}{c} \bold{r}_i(\Delta t) \\ \bold{p}_i(\Delta t) \\ \end{array}\right) = 
+				\exp \left[ \frac{\Delta t}{2}  \bold{F}_i \, \frac{\partial}{\partial \bold{p}_i} \right] \cdot
+				\exp \left[ \Delta t \, \frac{\bold{p}_i}{m_i} \, \frac{\partial}{\partial \bold{r}_i} \right]
+				\left(\begin{array}{c} \bold{r}_i \\ \bold{p}_i + \frac{\Delta t}{2}  \bold{F}_i(\bold{r}^N)\\ \end{array}\right)
+			\end{equation*}		
+		\end{column}	
+	\end{columns}
+	
+	\vspace*{0.15cm}
+	
+	$\Downarrow$
+	
+	\vspace*{0.15cm}
+
+	\begin{columns}
+		\begin{column}{\paperwidth}
+			\begin{equation*}
+				\left(\begin{array}{c} \bold{r}_i(\Delta t) \\ \bold{p}_i(\Delta t) \\ \end{array}\right) = 
+				\exp \left[ \frac{\Delta t}{2}  \bold{F}_i \, \frac{\partial}{\partial \bold{p}_i} \right] \cdot
+				\left(\begin{array}{c} \bold{r}_i + \Delta t \, \frac{\bold{p}_i}{m_i} \\ \bold{p}_i + \frac{\Delta t}{2}  \bold{F}_i(\bold{r}^N + \Delta t \, \frac{\bold{p}_i}{m_i})\\ \end{array}\right)
+			\end{equation*}		
+		\end{column}	
+	\end{columns}	
+	
+	\footnotetext[1]{In order to make the notation less cumbersome in the proceeding analysis, we will write $\bold{r}_i$ and $\bold{p}_i$ in stead of $\bold{r}_i(0)$ and $\bold{p}_i(0)$.}
+\end{frame}
+
+
+\begin{frame}[label=MDS-evOperator]
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{The symmetric Trotter theorem}
+	\justifying
+	
+	Finally, one obtains:
+	
+	\vspace*{-0.1cm}
+	
+	\begin{columns}
+		\begin{column}{\paperwidth}
+			\begin{equation*}
+				\left(\begin{array}{c} \bold{r}_i(\Delta t) \\ \\ \bold{p}_i(\Delta t) \\ \end{array}\right) = 
+				\left(\begin{array}{c} 
+				\bold{r}_i + \frac{\Delta t}{m_i} \left( \bold{p}_i +  \frac{\Delta t}{2}  \bold{F}_i(\bold{r}^N) \right) \\ \\
+				\bold{p}_i + \frac{\Delta t}{2}  \bold{F}_i(\bold{r}^N) + \frac{\Delta t}{2}  \bold{F}_i \left[ \bold{r}^N + \frac{\Delta t}{m_i} \left( \bold{p}_i +  \frac{\Delta t}{2}  \bold{F}_i(\bold{r}^N) \right) \right] \\
+				\end{array}\right)
+			\end{equation*}		
+		\end{column}	
+	\end{columns}	
+
+	\vspace*{0.4cm}	
+	
+	therefore, using the fact that $v = p/m$ and replacing the ``$(0)$'' label on the initial conditions, yields:
+	
+	\vspace*{-0.6cm}	
+	
+	\begin{align*}
+		\bold{r}_i(\Delta t) &= \bold{r}_i(0) + \Delta t \, \bold{v}_i(0) + \frac{\Delta t^2}{2 \, m_i} \, \bold{F}_i(\bold{r}^N(0))\\
+		\bold{v}_i(\Delta t) &= \bold{v}_i(0) + \frac{\Delta t}{2 \, m_i} \, [\bold{F}_i(\bold{r}^N(0)) + \bold{F}_i(\bold{r}^N(\Delta t))]
+	\end{align*}
+	
+	which \textbf{coincide with the velocity Verlet algorithm}.
+\end{frame}
+
+
+\begin{frame}[label=MDS-evOperator]
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{The symmetric Trotter theorem}
+	\justifying
+	
+	One final point should be made. It is not necessary to grind out explicit finite difference equations by applying the operators in a Trotter 
+	factorization analytically. Note that the velocity Verlet algorithm can be expressed as a three-step procedure:
+			
+	\vspace*{0.1cm}
+
+	\begin{enumerate}
+		\item	$\bold{p}_i(\Delta t /2) = \bold{p}_i(0) + \frac{\Delta t}{2} \bold{F}_i(\bold{r}^N(0))$
+		\vspace*{0.15cm}
+		\item	$\bold{r}_i(\Delta t) = \bold{r}_i(0) + \frac{\Delta t}{m_i} \bold{p}_i(\Delta t /2)$
+		\vspace*{0.15cm}
+		\item	$\bold{p}_i(\Delta t) = \bold{p}_i(\Delta t /2) + \frac{\Delta t}{2} \bold{F}_i(\bold{r}^N(\Delta t))$
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}[label=MDS-evOperator]
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{The symmetric Trotter theorem}
+	\justifying
+	
+	This procedure can also be rewritten very similar to a pseudocode:\footnotemark[1]
+	\small{	
+	\begin{align*}
+		&p[i] = p[i] + 0.5 \cdot \Delta t \cdot F[i]\\
+		&r[i] = r[i] + \Delta t \cdot p / m[i]\\
+		&\text{\textit{Recalculate the force}}\\
+		&p[i] = p[i] + 0.5 \cdot \Delta t \cdot F[i]
+	\end{align*}
+	}
+	Note that \textbf{these are just the steps required by the operator factorization scheme of \eqref{eq:trotter}}. 
+	The first operator that acts on the phase space produces the momentum translation; 
+	the next operator takes the output of the preceding step and performs the position translation; 
+	since this step changes the positions, the force must be recalculated; 
+	the last operator produces the final momentum translation using the new force. 
+	
+	\footnotetext[1]{The third line involves a call to some function or subroutine that updates the force from the new positions generated in 
+	the second line.}
+
+\end{frame}
+
+\begin{frame}[label=MDS-evOperator]
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{The symmetric Trotter theorem}
+	\justifying
+	
+	One final point should be made. It is not necessary to grind out explicit finite difference equations by applying the operators in a Trotter 
+	factorization analytically. Note that the velocity Verlet algorithm can be expressed as a three-step procedure:
+			
+	\vspace*{0.1cm}
+
+	\begin{enumerate}
+		\item	$\bold{p}_i(\Delta t /2) = \bold{p}_i(0) + \frac{\Delta t}{2} \bold{F}_i(\bold{r}^N(0))$
+		\vspace*{0.15cm}
+		\item	$\bold{r}_i(\Delta t) = \bold{r}_i(0) + \frac{\Delta t}{m_i} \bold{p}_i(\Delta t /2)$
+		\vspace*{0.15cm}
+		\item	$\bold{p}_i(\Delta t) = \bold{p}_i(\Delta t /2) + \frac{\Delta t}{2} \bold{F}_i(\bold{r}^N(\Delta t))$
+	\end{enumerate}
+\end{frame}
+
+
+\begin{frame}[label=MDS-evOperator]
+	\frametitle{Molecular Dynamics Simulations}
+	\framesubtitle{Summary of the numerical integrators}
+	\justifying
+	
+	\vspace*{-0.2cm}
+	
+	\begin{columns}
+		\begin{column}{\paperwidth}
+			\begin{center}
+				\includegraphics[width=0.825\paperwidth]{integrator_alg.png}
+			\end{center}
+		\end{column}	
+	\end{columns}	
+	
+	\vspace*{0.25cm}
+	
+	\footnotesize{(\textbf{a}) Verlet's original method. (\textbf{b}) The Leap Frog form. (\textbf{c}) The velocity form. 
+	The figures show successive steps in the implementation of each algorithm. In each case, the stored variables are in grey boxes.}
 \end{frame}
 
 
