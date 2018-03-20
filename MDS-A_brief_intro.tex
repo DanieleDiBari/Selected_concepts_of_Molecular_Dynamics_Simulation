@@ -203,10 +203,10 @@
 
 \usebackgroundtemplate{}
 
-\begin{frame}[allowframebreaks]\pdfbookmark[2]{Contents}{Contents}
-\frametitle{Table of Contents}
-\tableofcontents
-\end{frame}
+%\begin{frame}[allowframebreaks]\pdfbookmark[2]{Contents}{Contents}
+%\frametitle{Table of Contents}
+%\tableofcontents
+%\end{frame}
 
 \section{Introduction}
 \begin{frame}<presentation:0>[noframenumbering]
@@ -1160,9 +1160,9 @@
 
 
 \subsection{The classical time evolution operator}
-\begin{frame}[label=MDS-evOperator]
+\begin{frame}[label=MDS-evOperator1]
 	\frametitle{Molecular Dynamics Simulations}
-	\framesubtitle{The classical time evolution operator}
+	\framesubtitle{The classical time evolution operator and numerical integrators - I}
 	\justifying
 	
 	We have discussed numerical integration in a simplistic way, relying on Taylor series expansions to generate update procedures. 
@@ -1183,9 +1183,9 @@
 
 \end{frame}
 
-\begin{frame}[label=MDS-evOperator]
+\begin{frame}[label=MDS-evOperator2]
 	\frametitle{Molecular Dynamics Simulations}
-	\framesubtitle{The classical time evolution operator}
+	\framesubtitle{The classical time evolution operator and numerical integrators - II}
 	\justifying
 	
 	\vspace*{-0.15cm}
@@ -1213,9 +1213,9 @@
 	The last equation provides us with a \textbf{very useful starting point for developing approximate solutions} to Hamilton's equations.
 \end{frame}
 
-\begin{frame}[label=MDS-evOperator]
+\begin{frame}[label=MDS-evOperator3]
 	\frametitle{Molecular Dynamics Simulations}
-	\framesubtitle{The classical time evolution operator}
+	\framesubtitle{The classical time evolution operator and numerical integrators - III}
 	\justifying
 	
 	The Liouville operator can be written as a sum of two contributions, $\mathcal{L} =  \mathcal{L}_1 + \mathcal{L}_2$, where:
@@ -1234,7 +1234,9 @@
 	
 \end{frame}
 
-\begin{frame}[label=MDS-evOperator]
+
+\subsubsection{The symmetric Trotter theorem}
+\begin{frame}[label=MDS-trotter]
 	\frametitle{Molecular Dynamics Simulations}
 	\framesubtitle{The symmetric Trotter theorem}
 	\justifying
@@ -1259,9 +1261,9 @@
 \end{frame}
 
 
-\begin{frame}[label=MDS-evOperator]
+\begin{frame}[label=MDS-expOp]
 	\frametitle{Molecular Dynamics Simulations}
-	\framesubtitle{The symmetric Trotter theorem}
+	\framesubtitle{How do we apply exponential operators?}
 	\justifying
 	
 	Before progressing, let's look how a generic exponential operator $e^{c \frac{\partial}{\partial y}}$, where $c$ is independent of $y$, 
@@ -1278,9 +1280,10 @@
 \end{frame}
 
 
-\begin{frame}[label=MDS-evOperator]
+\subsubsection{The Trotter factorization scheme}
+\begin{frame}[label=MDS-trotterFact1]
 	\frametitle{Molecular Dynamics Simulations}
-	\framesubtitle{The symmetric Trotter theorem}
+	\framesubtitle{Example of the Trotter factorization scheme - I}
 	\justifying
 	
 	We are now in a position to apply the Trotter factorisation scheme to the classical evolution of a system. 
@@ -1298,12 +1301,9 @@
 \end{frame}
 
 
-
-
-
-\begin{frame}[label=MDS-evOperator]
+\begin{frame}[label=MDS-trotterFact2]
 	\frametitle{Molecular Dynamics Simulations}
-	\framesubtitle{The symmetric Trotter theorem}
+	\framesubtitle{Example of the Trotter factorization scheme - II}
 	\justifying
 	
 	\vspace*{-0.35cm}
@@ -1362,9 +1362,9 @@
 \end{frame}
 
 
-\begin{frame}[label=MDS-evOperator]
+\begin{frame}[label=MDS-trotterFact3]
 	\frametitle{Molecular Dynamics Simulations}
-	\framesubtitle{The symmetric Trotter theorem}
+	\framesubtitle{Example of the Trotter factorization scheme - III}
 	\justifying
 	
 	Finally, one obtains:
@@ -1398,9 +1398,9 @@
 \end{frame}
 
 
-\begin{frame}[label=MDS-evOperator]
+\begin{frame}[label=MDS-trotterFact4]
 	\frametitle{Molecular Dynamics Simulations}
-	\framesubtitle{The symmetric Trotter theorem}
+	\framesubtitle{Example of the Trotter factorization scheme - IV}
 	\justifying
 	
 	One final point should be made. It is not necessary to grind out explicit finite difference equations by applying the operators in a Trotter 
@@ -1417,9 +1417,9 @@
 	\end{enumerate}
 \end{frame}
 
-\begin{frame}[label=MDS-evOperator]
+\begin{frame}[label=MDS-trotterFact5]
 	\frametitle{Molecular Dynamics Simulations}
-	\framesubtitle{The symmetric Trotter theorem}
+	\framesubtitle{Example of the Trotter factorization scheme - V}
 	\justifying
 	
 	This procedure can also be rewritten very similar to a pseudocode:\footnotemark[1]
@@ -1442,29 +1442,11 @@
 
 \end{frame}
 
-\begin{frame}[label=MDS-evOperator]
+
+\subsection{Summary of the numerical integrators viewed}
+\begin{frame}[label=MDS-summNumInt]
 	\frametitle{Molecular Dynamics Simulations}
-	\framesubtitle{The symmetric Trotter theorem}
-	\justifying
-	
-	One final point should be made. It is not necessary to grind out explicit finite difference equations by applying the operators in a Trotter 
-	factorization analytically. Note that the velocity Verlet algorithm can be expressed as a three-step procedure:
-			
-	\vspace*{0.1cm}
-
-	\begin{enumerate}
-		\item	$\bold{p}_i(\Delta t /2) = \bold{p}_i(0) + \frac{\Delta t}{2} \bold{F}_i(\bold{r}^N(0))$
-		\vspace*{0.15cm}
-		\item	$\bold{r}_i(\Delta t) = \bold{r}_i(0) + \frac{\Delta t}{m_i} \bold{p}_i(\Delta t /2)$
-		\vspace*{0.15cm}
-		\item	$\bold{p}_i(\Delta t) = \bold{p}_i(\Delta t /2) + \frac{\Delta t}{2} \bold{F}_i(\bold{r}^N(\Delta t))$
-	\end{enumerate}
-\end{frame}
-
-
-\begin{frame}[label=MDS-evOperator]
-	\frametitle{Molecular Dynamics Simulations}
-	\framesubtitle{Summary of the numerical integrators}
+	\framesubtitle{Summary of the numerical integrators viewed}
 	\justifying
 	
 	\vspace*{-0.2cm}
@@ -1508,50 +1490,19 @@
 	Molecular dynamics involves nonlinear ordinary differential equations, so analytical stability analysis cannot be used. Instead, it may do an approximate analysis by linearizing the differential equations or it may attack the stability problem using the method of Lyapunov. Both strategies are cumbersome when applied to the equations of motion used in molecular dynamics, thus what it is usually done for simple simulations is a numerical analysis using trial values for the time step. That is, through a series of short test runs, it is possible to identify the critical step $\Delta t$ at which the algorithm becomes unstable and then choose a smaller operational value that establishes conservation of energy. 
 \end{frame}
 
-
-
-\begin{frame}
-	\frametitle{Introduction}
-	\framesubtitle{What is a MD Simulation?}
-	\justifying
-	Molecular dynamics simulations compute the motions of individual molecules in models of solids, liquids and gasses. The key idea is motion, which describes how positions, velocities and orientations change with time. In effect, molecular dynamics constitutes a motion picture that follows molecules as they dart to and fro, twisting, turning, colliding with one another and, perhaps, colliding with their container.
-\end{frame}
-
-\begin{frame}
-	\frametitle{Introduction}
-	\framesubtitle{What is a MD Simulation?}
-	\justifying
-Historically, the choice
-of algorithm was often determined in large part by the amount of computer
-memory needed, i.e. the number of variables that needed to be kept track of.
-Given the large memories available today, this concern has been largely
-ameliorated. Two features that we do want to mention here which were
-introduced to make molecular dynamics simulations faster are potential ``cutoffs''
-and ``neighbor lists''. (These labor saving devices can also be used for
-Monte Carlo simulations of systems with continuous symmetry.) As the
-particles move, the forces acting on them change and need to be continuously
-recomputed. A way to speed up the calculation with only a modest
-reduction in accuracy is to cut off the interaction at some suitable range and
-then make a list of all neighbors which are within some slightly larger radius.
-As time progresses, only the forces caused by neighbors within the ``cutoff
-radius’ need to be recomputed, and for large systems the reduction in effort
-can be substantial. (The list includes neighbors which are initially beyond
-the cutoff but which are near enough that they might enter the ``interacting
-region'' within the number of time steps, typically 10–20 which elapse before
-the list is updated.) With the advent of parallel computers, molecular
-dynamics algorithms have been devised that will distribute the system
-over multiple processors and allow treatment of quite large numbers of
-particles. One major constraint which remains is the limitation in maximum
-integration time and algorithmic improvement in this area is an important
-challenge for the future.
-\end{frame}
+%\begin{frame}
+%	\frametitle{Introduction}
+%	\framesubtitle{What is a MD Simulation?}
+%	\justifying
+%	Historically, the choice of algorithm was often determined in large part by the amount of computer memory needed, i.e. the number of variables that needed to be kept track of. Given the large memories available today, this concern has been largely ameliorated. Two features that we do want to mention here which were introduced to make molecular dynamics simulations faster are potential ``cutoffs'' and ``neighbor lists''. (These labor saving devices can also be used for Monte Carlo simulations of systems with continuous symmetry.) As the particles move, the forces acting on them change and need to be continuously recomputed. A way to speed up the calculation with only a modest reduction in accuracy is to cut off the interaction at some suitable range and then make a list of all neighbors which are within some slightly larger radius. As time progresses, only the forces caused by neighbors within the ``cutoff radius'' need to be recomputed, and for large systems the reduction in effort can be substantial. (The list includes neighbors which are initially beyond the cutoff but which are near enough that they might enter the ``interacting region'' within the number of time steps, typically 10–20 which elapse before the list is updated.) With the advent of parallel computers, molecular dynamics algorithms have been devised that will distribute the system over multiple processors and allow treatment of quite large numbers of particles. One major constraint which remains is the limitation in maximum integration time and algorithmic improvement in this area is an important challenge for the future.
+%\end{frame}
 
 \section{Bibliography}
-\begin{frame}[allowframebreaks]
-	\frametitle{Sources}
+\begin{frame}%[allowframebreaks]
+	\frametitle{Bibliography}
 	\justifying
 		
-	\bluetextbf{Books on Molecular Dynamics Simulation}
+	%\bluetextbf{Books on Molecular Dynamics Simulation}
 	
 	\begin{thebibliography}{99}
 	\setbeamertemplate{bibliography item}[text]
